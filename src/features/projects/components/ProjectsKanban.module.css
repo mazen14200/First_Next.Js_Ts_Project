@@ -1,0 +1,87 @@
+.scroll {
+  scrollbar-width: thin;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+}
+
+.pending {
+  scrollbar-color: #6c757d transparent;
+}
+
+.pending::-webkit-scrollbar-thumb {
+  background: #6c757d;
+}
+
+.pending::-webkit-scrollbar-thumb:hover {
+  background: #565e64;
+}
+
+.inProgress {
+  scrollbar-color: #ffc107 transparent;
+}
+
+.inProgress::-webkit-scrollbar-thumb {
+  background: #ffc107;
+}
+
+.inProgress::-webkit-scrollbar-thumb:hover {
+  background: #d9a406;
+}
+
+.completed {
+  scrollbar-color: #28a745 transparent;
+}
+
+.completed::-webkit-scrollbar-thumb {
+  background: #28a745;
+}
+
+.completed::-webkit-scrollbar-thumb:hover {
+  background: #208637;
+}
+
+.cancelled {
+  scrollbar-color: #dc3545 transparent;
+}
+
+.cancelled::-webkit-scrollbar-thumb {
+  background: #dc3545;
+}
+
+.cancelled::-webkit-scrollbar-thumb:hover {
+  background: #b02a37;
+}
+
+.onHold {
+  scrollbar-color: #007bff transparent;
+}
+
+.onHold::-webkit-scrollbar-thumb {
+  background: #007bff;
+}
+
+.onHold::-webkit-scrollbar-thumb:hover {
+  background: #0069d9;
+}
+
+.unassigned {
+  scrollbar-color: #94a3b8 transparent;
+}
+
+.unassigned::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+}
+
+.unassigned::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}

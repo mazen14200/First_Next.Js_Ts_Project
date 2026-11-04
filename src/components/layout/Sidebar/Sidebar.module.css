@@ -1,0 +1,488 @@
+/* ================================
+   Sidebar
+================================ */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+
+  width: 260px;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  flex-shrink: 0;
+
+  background-image: url("/images/bg.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: white;
+
+  border-left: 1px solid #efefef;
+
+  transition: width 0.25s ease;
+}
+
+
+/* ================================
+   Sidebar Header
+================================ */
+
+.sidebarHeader {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 82px;
+  padding: 10px 15px;
+}
+
+
+/* ================================
+   Logo
+================================ */
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoLarge {
+  height: 46px;
+  width: auto;
+}
+
+.logoSmall {
+  display: none;
+
+  height: 42px;
+  width: auto;
+}
+
+
+/* ================================
+   Collapsed Sidebar Logo
+================================ */
+
+.collapsed {
+  width: 80px;
+}
+
+.collapsed .logoLarge {
+  display: none;
+}
+
+.collapsed .logoSmall {
+  display: block;
+}
+
+
+/* ================================
+   Toggle Button
+================================ */
+
+.toggleButton {
+  position: absolute;
+
+  inset-inline-end: 8px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 2px solid #616161;
+  border-radius: 50%;
+
+  background: #eeeeee;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.toggleButton:hover {
+  border-color: #b8b8b8;
+  background: #e5e5e5;
+}
+
+.toggleDot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  transition: background-color 0.2s ease;
+}
+
+.toggleDotActive {
+  background: #616161;
+}
+
+.toggleButton span {
+  width: 6px;
+  height: 6px;
+
+  border: 2px solid #616161;
+  border-radius: 50%;
+}
+
+.collapsed .toggleButton {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.collapsed:hover .toggleButton {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ================================
+   Sidebar Links Container
+================================ */
+
+.sidebarLinks {
+  flex: 1;
+  min-height: 0;
+
+  margin-top: 40px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ================================
+   Main Navigation
+================================ */
+
+.sideNav {
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ================================
+   Section Title
+================================ */
+
+.sideNavTitle {
+  padding: 14px 20px 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #777;
+}
+
+
+/* ================================
+   Navigation Item
+================================ */
+
+.sideNavItem {
+  list-style: none;
+  padding: 0 10px;
+}
+
+
+/* ================================
+   Navigation Link
+================================ */
+
+.sideNavLink {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  padding: 10px 20px;
+
+  border: none;
+  border-bottom: 1px solid #efefef;
+  border-radius: 0.3rem;
+
+  background: transparent;
+
+  color: var(--text-color);
+
+  text-decoration: none;
+
+  font-weight: 700;
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.sideNavLink:hover {
+  color: #f37423;
+}
+
+.sideNavLink.active,
+.subMenuLink.active {
+  background-color: #1470ad;
+  color: white;
+}
+
+.sideNavLink.active :global(svg),
+.subMenuLink.active :global(svg) {
+  color: white;
+}
+
+.sideNavLink.active:hover,
+.subMenuLink.active:hover {
+  background-color: #1470ad;
+  color: white;
+}
+
+/* ================================
+   Menu Icon
+================================ */
+
+.menuIcon {
+  width: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-inline-end: 8px;
+
+  font-size: 18px;
+
+  transition: color 0.25s ease;
+}
+
+
+/* ================================
+   Menu Text
+================================ */
+
+.menuText {
+  flex: 1;
+
+  text-align: start;
+}
+
+
+/* ================================
+   Menu Arrow
+================================ */
+
+.menuArrow {
+  font-size: 11px;
+
+  transition: transform 0.25s ease;
+}
+
+.menuArrowOpen {
+  transform: rotate(180deg);
+}
+
+
+/* ================================
+   Sub Menu
+================================ */
+
+.subMenu {
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.subMenuItem {
+  list-style: none;
+}
+
+
+/* ================================
+   Sub Menu Link
+================================ */
+
+.subMenuLink {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 8px 35px;
+
+  color: #000;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  opacity: 0.75;
+
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.subMenuLink:hover {
+  color: #f37423;
+
+  opacity: 1;
+}
+
+
+/* ================================
+   Collapsed Navigation
+================================ */
+
+.collapsed .sideNavTitle {
+  display: none;
+}
+
+.collapsed .menuText {
+  display: none;
+}
+
+.collapsed .menuArrow {
+  display: none;
+}
+
+.collapsed .sideNavLink {
+  justify-content: center;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.collapsed .menuIcon {
+  margin: 0;
+}
+
+.mobileCloseButton {
+  display: none;
+}
+
+/* =================================
+   Tablet & Mobile
+================================= */
+
+@media (max-width: 1023px) {
+
+  .sidebar {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    z-index: 1000;
+
+    transform: translateX(100%);
+
+    transition: transform 0.25s ease;
+
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .sidebar.mobileOpen {
+    transform: translateX(0);
+  }
+
+
+  /* Disable desktop collapsed behavior */
+
+  .sidebar.collapsed {
+    width: 260px;
+
+    transform: translateX(100%);
+  }
+
+  .sidebar.collapsed.mobileOpen {
+    transform: translateX(0);
+  }
+
+
+  /* Mobile sidebar should always show full content */
+
+  .sidebar .logoLarge {
+    display: block;
+  }
+
+  .sidebar .logoSmall {
+    display: none;
+  }
+
+  .sidebar .sideNavTitle {
+    display: block;
+  }
+
+  .sidebar .menuText {
+    display: block;
+  }
+
+  .sidebar .menuArrow {
+    display: block;
+  }
+
+  .sidebar .sideNavLink {
+    justify-content: flex-start;
+
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .sidebar .menuIcon {
+    margin-inline-start: 8px;
+  }
+
+
+  /* Overlay */
+
+  .mobileOverlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 999;
+
+    background: rgba(0, 0, 0, 0.35);
+  }
+
+    .toggleButton {
+    display: none;
+  }
+
+  .mobileCloseButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+    font-size: 20px;
+  }
+}

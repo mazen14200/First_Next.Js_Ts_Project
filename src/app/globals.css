@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@import "../styles/variables.css";
+@import "../styles/fonts.css";
+
+html,
+body {
+  font-family: "mainFont", sans-serif;
+}
+
+body {
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(110, 110, 110, 0.16),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(150, 150, 150, 0.18),
+      transparent 42%
+    ),
+    linear-gradient(
+      135deg,
+      #f1f2f4 0%,
+      #ffffff 50%,
+      #eceef0 100%
+    );
+
+}
+

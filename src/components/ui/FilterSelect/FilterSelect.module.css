@@ -1,0 +1,221 @@
+.select,
+.select :global(.ant-select-selector),
+.select :global(.ant-select-selection-item),
+.select :global(.ant-select-selection-placeholder),
+.dropdown,
+.dropdown :global(.ant-select-item) {
+  font-family: "mainFont", sans-serif !important;
+}
+
+/* ==============================
+   WRAPPER
+   ============================== */
+
+.wrapper {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ==============================
+   LABEL
+   ============================== */
+
+.labelWrapper {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+}
+
+.label {
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ==============================
+   SELECT
+   ============================== */
+
+.select {
+  width: 100% !important;
+  max-width: 100%;
+  height: 40px;
+}
+
+.select :global(.ant-select-selector) {
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 12px !important;
+  border: 1px solid rgba(20, 112, 173, 0.28) !important;
+  border-radius: 11px !important;
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f3f9fc 100%
+  ) !important;
+  box-shadow:
+    0 2px 5px rgba(20, 112, 173, 0.05),
+    0 6px 16px rgba(15, 23, 42, 0.04) !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease !important;
+}
+
+/* Brand accent */
+
+.select :global(.ant-select-selector)::before {
+  content: "";
+  width: 4px;
+  height: 22px;
+  flex-shrink: 0;
+  margin-inline-end: 10px;
+  border-radius: 999px;
+  background: #1470ad;
+  box-shadow: 0 2px 7px rgba(20, 112, 173, 0.25);
+}
+
+/* Hover */
+
+.select:hover :global(.ant-select-selector) {
+  border-color: #1470ad !important;
+  background: #ffffff !important;
+  box-shadow:
+    0 4px 10px rgba(20, 112, 173, 0.08),
+    0 10px 22px rgba(20, 112, 173, 0.08) !important;
+  transform: translateY(-1px);
+}
+
+/* Focus */
+
+.select :global(.ant-select-focused)
+  :global(.ant-select-selector) {
+  border-color: #1470ad !important;
+  background: #ffffff !important;
+  box-shadow:
+    0 0 0 3px rgba(20, 112, 173, 0.12),
+    0 7px 20px rgba(20, 112, 173, 0.10) !important;
+}
+
+/* ==============================
+   TEXT
+   ============================== */
+
+.select :global(.ant-select-selection-item) {
+  color: #1470ad !important;
+  font-size: 14px !important;
+  font-weight: 650 !important;
+}
+
+.select :global(.ant-select-selection-placeholder) {
+  color: #64748b !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+/* ==============================
+   ARROW
+   ============================== */
+
+.select :global(.ant-select-arrow) {
+  width: 29px;
+  height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -14px;
+  border-radius: 8px;
+  background: rgba(20, 112, 173, 0.10);
+  color: #1470ad !important;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease !important;
+}
+
+.select:hover :global(.ant-select-arrow) {
+  background: #1470ad;
+  color: #ffffff !important;
+}
+
+/* ==============================
+   DROPDOWN
+   ============================== */
+
+.dropdown {
+  margin-top: 7px !important;
+  padding: 7px !important;
+  border: 1px solid rgba(20, 112, 173, 0.16) !important;
+  border-radius: 13px !important;
+  background: #ffffff !important;
+  box-shadow:
+    0 8px 18px rgba(15, 23, 42, 0.06),
+    0 20px 45px rgba(20, 112, 173, 0.12) !important;
+}
+
+/* Options */
+
+.dropdown :global(.ant-select-item) {
+  position: relative;
+  min-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 2px 0 !important;
+  padding: 0 13px !important;
+  border-radius: 8px !important;
+  color: #475569 !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease !important;
+}
+
+/* Hover */
+
+.dropdown :global(.ant-select-item-option-active) {
+  background: rgba(20, 112, 173, 0.08) !important;
+  color: #1470ad !important;
+}
+
+/* Selected */
+
+.dropdown :global(.ant-select-item-option-selected) {
+  background: #1470ad !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* Selected check */
+
+.dropdown
+  :global(.ant-select-item-option-selected)
+  :global(.ant-select-item-option-state) {
+  color: #ffffff !important;
+}
+
+/* ==============================
+   COMPACT
+   ============================== */
+
+.compactWrapper {
+  width: 82px;
+  flex: 0 0 82px;
+}
+
+.compactSelect {
+  width: 82px !important;
+}
+
+.compactSelect :global(.ant-select-selector) {
+  height: 36px !important;
+}
+
+.compactSelect :global(.ant-select-selection-item) {
+  font-size: 13px !important;
+}

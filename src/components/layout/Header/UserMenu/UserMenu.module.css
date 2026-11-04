@@ -1,0 +1,305 @@
+/* ============================= */
+/* User Section */
+/* ============================= */
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+
+/* ============================= */
+/* Language Toggle */
+/* ============================= */
+
+.languageToggle {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  height: 38px;
+  padding: 0 5px;
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 6px 20px rgba(0, 0, 0, 0.06);
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.languageToggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+
+  border-color: rgba(255, 255, 255, 0.7);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 8px 24px rgba(0, 0, 0, 0.09);
+}
+
+
+/* ============================= */
+/* Language Option */
+/* ============================= */
+
+.languageOption {
+  position: relative;
+
+  height: 28px;
+  min-width: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 8px;
+
+  color: rgba(31, 41, 55, 0.5);
+
+  font-size: 11px;
+  font-weight: 600;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+/* Active Language */
+
+.languageOption.active {
+  color: var(--main-color);
+}
+
+
+/* Active underline */
+
+.languageOption.active::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -1px;
+  left: 50%;
+
+  width: 18px;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background: var(--main-color);
+
+  transform: translateX(-50%);
+
+  box-shadow:
+    0 1px 5px rgba(17, 24, 39, 0.25);
+}
+
+
+/* Tiny lift */
+
+.languageOption.active {
+  transform: translateY(-1px);
+}
+
+
+/* ============================= */
+/* Divider */
+/* ============================= */
+
+.divider {
+  width: 1px;
+  height: 14px;
+
+  background: rgba(31, 41, 55, 0.15);
+}
+
+
+/* ============================= */
+/* User Button */
+/* ============================= */
+
+.userButton {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  height: 42px;
+
+  padding: 0 8px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.userButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+
+  transform: translateY(-1px);
+}
+
+
+/* ============================= */
+/* Avatar */
+/* ============================= */
+
+.avatar {
+  width: 34px;
+  height: 34px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.14);
+}
+
+
+/* ============================= */
+/* User Name */
+/* ============================= */
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* ============================= */
+/* Profile Arrow */
+/* ============================= */
+
+.profileArrow {
+  font-size: 10px;
+
+  opacity: 0.55;
+
+  transition: transform 0.3s ease;
+}
+
+.open {
+  transform: rotate(180deg);
+}
+
+
+/* ============================= */
+/* Tablet */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  .userSection {
+    gap: 8px;
+  }
+
+  .languageToggle {
+    height: 34px;
+
+    padding: 0 4px;
+
+    border-radius: 10px;
+  }
+
+  .languageOption {
+    height: 25px;
+
+    min-width: 31px;
+
+    padding: 0 6px;
+
+    font-size: 10px;
+  }
+
+  .languageOption.active::after {
+    width: 15px;
+    height: 2px;
+  }
+
+  .divider {
+    height: 12px;
+  }
+
+  .userName,
+  .profileArrow {
+    display: none;
+  }
+
+  .userButton {
+    padding: 0 3px;
+  }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+
+/* ============================= */
+/* Mobile */
+/* ============================= */
+
+@media (max-width: 480px) {
+
+  .userSection {
+    gap: 5px;
+  }
+
+  .languageToggle {
+    height: 32px;
+
+    padding: 0 3px;
+
+    border-radius: 9px;
+  }
+
+  .languageOption {
+    height: 24px;
+
+    min-width: 28px;
+
+    padding: 0 5px;
+
+    font-size: 9px;
+  }
+
+  .languageOption.active::after {
+    width: 13px;
+  }
+
+  .divider {
+    height: 11px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+  }
+}

@@ -1,0 +1,207 @@
+.addButtonWrapper {
+  position: relative;
+  display: inline-flex;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* =========================
+   Shared Button Base
+========================= */
+
+.actionButton,
+.printButton,
+.outlineActionButton,
+.submitButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  overflow: hidden;
+
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+/* =========================
+   Add
+========================= */
+
+.actionButton {
+  border: 1px solid #1470ad;
+  background: #1470ad;
+  color: #ffffff;
+
+  box-shadow:
+    0 4px 12px rgba(20, 112, 173, 0.22);
+}
+
+.actionButton:hover {
+  background: #105f94;
+  border-color: #105f94;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(20, 112, 173, 0.30);
+}
+
+.actionButton:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   Print
+========================= */
+
+.printButton {
+  border: 1px solid #173b52;
+  background: #173b52;
+  color: #ffffff;
+
+  box-shadow:
+    0 4px 12px rgba(23, 59, 82, 0.18);
+}
+
+.printButton:hover {
+  background: #102d40;
+  border-color: #102d40;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(23, 59, 82, 0.25);
+}
+
+.printButton:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   Export
+========================= */
+
+.outlineActionButton {
+  border: 1px solid #9eafb9;
+  background: #0ad097;
+  color: white;
+
+  box-shadow:
+    0 3px 8px rgba(8, 29, 56, 0.05);
+}
+
+.outlineActionButton:hover {
+  border-color: #1470ad;
+  background: #f7fbfd;
+  color: #1470ad;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 18px rgba(20, 112, 173, 0.11);
+}
+
+.outlineActionButton:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   Submit
+========================= */
+
+.submitButton {
+  border: 1px solid #1470ad;
+  background: #1470ad;
+  color: #ffffff;
+
+  box-shadow:
+    0 4px 12px rgba(20, 112, 173, 0.22);
+}
+
+.submitButton:hover {
+  background: #105f94;
+  border-color: #105f94;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(20, 112, 173, 0.30);
+}
+
+.submitButton:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   Shine Effect
+========================= */
+
+.shine {
+  position: absolute;
+  top: 0;
+  left: -100px;
+
+  width: 70px;
+  height: 100%;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+}
+
+.actionButton:hover .shine,
+.printButton:hover .shine,
+.outlineActionButton:hover .shine,
+.submitButton:hover .shine {
+  animation: shine 700ms ease forwards;
+}
+
+@keyframes shine {
+  0% {
+    left: -100px;
+  }
+
+  60% {
+    left: 100%;
+  }
+
+  100% {
+    left: 120%;
+  }
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 640px) {
+  .actionButton,
+  .printButton,
+  .outlineActionButton {
+    height: 38px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .submitButton {
+    min-width: 125px;
+  }
+}
