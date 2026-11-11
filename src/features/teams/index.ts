@@ -1,10 +1,4 @@
-export {
-  createTeam,
-  deleteTeam,
-  getTeamById,
-  getTeams,
-  updateTeam,
-} from "./services/teams.service";
+export { teamsService } from "./services/teams.service";
 
 export type {
   CreateTeamRequest,

@@ -1,15 +1,9 @@
-export {
-  getSkills,
-  getSkillById,
-  createSkill,
-  updateSkill,
-  deleteSkill,
-  activateSkill,
-  deactivateSkill,
-} from "./services/skills.service";
+export { skillsService } from "./services/skills.service";
 
 export type {
-  Skill,
   CreateSkillRequest,
+  PaginatedSkillsResponse,
+  Skill,
+  SkillFilters,
   UpdateSkillRequest,
 } from "./types/skills.types";

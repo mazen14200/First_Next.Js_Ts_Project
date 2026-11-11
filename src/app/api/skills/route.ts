@@ -1,80 +1,22 @@
-import { NextResponse } from "next/server";
+import { createCrudRoutes } from "../../../services/crud/createCrudRoutes";
 
-import {
-  getSkills,
-  createSkill,
-} from "../../../features/skills/index";
+import { skillsService } from "../../../features/skills/services/skills.service";
+import type { SkillFilters } from "../../../features/skills/types/skills.types";
 
-export async function GET(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url);
+const skillsRoutes = createCrudRoutes({
+  service: skillsService,
+  entityName: "skill",
+  parseFilters: (searchParams): SkillFilters => {
+    const isActiveParam = searchParams.get("IsActive");
 
-    const pageNumber = Number(
-      searchParams.get("PageNumber") ?? "1"
-    );
+    return {
+      isActive:
+        isActiveParam === null
+          ? undefined
+          : isActiveParam === "true",
+    };
+  },
+});
 
-    const pageSize = Number(
-      searchParams.get("PageSize") ?? "10"
-    );
-
-    const search =
-      searchParams.get("Search")?.trim() ?? "";
-
-    const isActiveParam =
-      searchParams.get("IsActive");
-
-    const isActive =
-      isActiveParam === null
-        ? undefined
-        : isActiveParam === "true";
-
-    const skills = await getSkills(
-      pageNumber,
-      pageSize,
-      search,
-      isActive
-    );
-
-    return NextResponse.json(skills);
-  } catch (error) {
-    console.error(
-      "GET /api/skills failed:",
-      error
-    );
-
-    return NextResponse.json(
-      {
-        message: "Failed to fetch skills",
-      },
-      {
-        status: 500,
-      }
-    );
-  }
-}
-
-export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-
-    const skill = await createSkill(body);
-
-    return NextResponse.json(skill, {
-      status: 201,
-    });
-  } catch (error) {
-    console.error(
-      "POST /api/skills failed:",
-      error
-    );
-
-    return NextResponse.json(
-      {
-        message: "Failed to create skill",
-      },
-      {
-        status: 500,
-      }
-    );
-  }
-}
+export const GET = skillsRoutes.collection.GET;
+export const POST = skillsRoutes.collection.POST;

@@ -8,6 +8,10 @@ export interface Skill {
   updatedAt: string | null;
 }
 
+export interface SkillFilters {
+  isActive?: boolean;
+}
+
 export interface PaginatedSkillsResponse {
   items: Skill[];
   totalCount: number;

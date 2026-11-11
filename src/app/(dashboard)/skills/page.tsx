@@ -1,9 +1,9 @@
-import SkillsTable from "../../../features/skills/components/SkillsTable";
+import SkillsPage from "../../../features/skills/components/SkillsPage";
 
-export default function SkillLevelsPage() {
+export default function SkillsRoutePage() {
   return (
-  <div className="p-6">
-    <SkillsTable />
-  </div>
-)
+    <div className="p-6">
+      <SkillsPage />
+    </div>
+  );
 }

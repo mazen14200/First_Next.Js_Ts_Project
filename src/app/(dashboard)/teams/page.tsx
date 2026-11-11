@@ -1,9 +1,9 @@
-import TeamTable from "../../../features/teams/components/TeamTable";
+import TeamsPage from "../../../features/teams/components/TeamsPage";
 
-export default function TeamsPage() {
+export default function TeamsRoutePage() {
   return (
-  <div className="p-6">
-    <TeamTable />
-  </div>
-)
+    <div className="p-6">
+      <TeamsPage />
+    </div>
+  );
 }

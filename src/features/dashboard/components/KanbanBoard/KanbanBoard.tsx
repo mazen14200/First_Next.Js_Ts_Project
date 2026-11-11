@@ -67,7 +67,7 @@ export default function KanbanBoard() {
   };
 
   useEffect(() => {
-    loadKanbanData();
+    void Promise.resolve().then(loadKanbanData);
   }, []);
 
   const handleDeleteProject = (projectId: number) => {

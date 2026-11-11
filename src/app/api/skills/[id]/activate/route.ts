@@ -1,5 +1,12 @@
-import { NextResponse } from "next/server";
-import { activateSkill } from "../../../../../features/skills/index";
+import { NextRequest, NextResponse } from "next/server";
+
+import { skillsService } from "../../../../../features/skills/services/skills.service";
+
+import {
+  invalidIdResponse,
+  parseId,
+  toErrorResponse,
+} from "../../../../../lib/api/route-helpers";
 
 interface RouteContext {
   params: Promise<{
@@ -8,35 +15,31 @@ interface RouteContext {
 }
 
 export async function PATCH(
-  _request: Request,
+  _request: NextRequest,
   context: RouteContext
 ) {
   try {
     const { id } = await context.params;
-    const skillId = Number(id);
+    const skillId = parseId(id);
 
-    if (Number.isNaN(skillId)) {
-      return NextResponse.json(
-        { message: "Invalid skill id" },
-        { status: 400 }
-      );
+    if (skillId === null) {
+      return invalidIdResponse("skill");
     }
 
-    await activateSkill(skillId);
+    await skillsService.activate(skillId);
 
-    return NextResponse.json(
-      { message: "Skill activated successfully" },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      message: "Skill activated successfully",
+    });
   } catch (error) {
     console.error(
       "PATCH /api/skills/[id]/activate failed:",
       error
     );
 
-    return NextResponse.json(
-      { message: "Failed to activate skill" },
-      { status: 500 }
+    return toErrorResponse(
+      error,
+      "Failed to activate skill"
     );
   }
 }
