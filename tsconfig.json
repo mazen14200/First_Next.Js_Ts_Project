@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "paths": { // Path mapping for module resolution Auto import  with @ --> from "@/features/status";
+      "@/*": ["./src/*"]  // instead of using relative paths like "../../features/status", you can use @/features/status
+    },
     "target": "ES2017",
     "lib": [
       "dom",
