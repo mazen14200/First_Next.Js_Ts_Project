@@ -44,7 +44,7 @@ const TableHeader = ({
   title,
   description,
   recordCount,
-  currentPage,
+  currentPage: _currentPage,
   filters,
 
   showSearch = true,

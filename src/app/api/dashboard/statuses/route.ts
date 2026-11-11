@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getStatuses } from "../../../../features/dashboard/services/statuses.service";
+import { getStatuses } from "../../../../features/status/services/status.services";
 
 export async function GET() {
   try {

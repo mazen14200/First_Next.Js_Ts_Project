@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import styles from './LoginForm.module.css';
 
-import { useState, type SyntheticEvent } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {

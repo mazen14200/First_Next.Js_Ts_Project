@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import {
   getProjects,
   createProject,
-} from "../../../../features/projects0/services/projects.service";
+} from "../../../../features/projects/services/projects.service";
 
-import type { CreateProjectRequest } from "../../../../features/projects0/types/project.types";
+import type { CreateProjectRequest } from "../../../../features/projects/types/project.types";
 import axios from "axios";
 
 export async function GET() {

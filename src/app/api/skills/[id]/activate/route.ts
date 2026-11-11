@@ -8,7 +8,7 @@ interface RouteContext {
 }
 
 export async function PATCH(
-  request: Request,
+  _request: Request,
   context: RouteContext
 ) {
   try {

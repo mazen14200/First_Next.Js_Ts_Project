@@ -1,7 +1,7 @@
 "use client";
 
 import { Pagination } from "antd";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 import styles from "./TablePagination.module.css";
 
@@ -18,10 +18,9 @@ const TablePagination = ({
   pageSize,
   total,
   onPageChange,
-  onPageSizeChange,
+  onPageSizeChange: _onPageSizeChange,
 }: TablePaginationProps) => {
   const locale = useLocale();
-  const t = useTranslations("tableHeader");
 
   if (total === 0) {
     return null;

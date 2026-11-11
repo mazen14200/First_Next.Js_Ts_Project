@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-import { deleteProject } from "../../../../../features/dashboard/services/projects.service";
+import { deleteProject } from "../../../../../features/projects/services/projects.service";
 
 export async function DELETE(
-  request: Request,
+  _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {

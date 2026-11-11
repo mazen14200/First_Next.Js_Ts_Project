@@ -7,63 +7,67 @@ import { Modal } from "antd";
 
 import styles from "./KanbanBoard.module.css";
 
-import AddProjectModal from "../Projects/AddProjectModal";
+import ProjectModal from "../../../projects/components/ProjectsModal";
 
 import type { Column, Columns, Project } from "../../types/Kanban.types";
 import type { Status } from "../../types/status.types";
+import type {
+  CreateProjectRequest,
+  UpdateProjectRequest,
+} from "../../../projects/types/project.types";
 
 export default function KanbanBoard() {
   const t = useTranslations("dashboard.kanban");
   const locale = useLocale()
 
   const [columns, setColumns] = useState<Columns>([]);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [statuses, setStatuses] = useState<Status[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    async function fetchKanbanData() {
-      try {
-        const [statusesResponse, projectsResponse] = await Promise.all([
-          fetch("/api/dashboard/statuses"),
-          fetch("/api/dashboard/projects"),
-        ]);
+  const loadKanbanData = async () => {
+    try {
+      const [statusesResponse, projectsResponse] = await Promise.all([
+        fetch("/api/dashboard/statuses"),
+        fetch("/api/dashboard/projects"),
+      ]);
 
-        if (!statusesResponse.ok) {
-          throw new Error("Failed to fetch statuses");
-        }
-
-        if (!projectsResponse.ok) {
-          throw new Error("Failed to fetch projects");
-        }
-
-        const statuses: Status[] = await statusesResponse.json();
-        const projectsData = await projectsResponse.json();
-
-        const projects: Project[] = projectsData.items;
-
-        const validStatuses = statuses.filter(
-          (status) => status.name.trim() !== ""
-        );
-
-        const statusColumns: Columns = validStatuses.map(
-          (status): Column => ({
-            id: status.id,
-            name: status.name,
-            colorCode: status.colorCode,
-            projects: projects.filter(
-              (project) => project.statusName === status.name
-            ),
-          })
-        );
-
-        setColumns(statusColumns);
-        setProjects(projects);
-      } catch (error) {
-        console.error("Failed to fetch kanban data:", error);
+      if (!statusesResponse.ok) {
+        throw new Error("Failed to fetch statuses");
       }
-    }
 
-    fetchKanbanData();
+      if (!projectsResponse.ok) {
+        throw new Error("Failed to fetch projects");
+      }
+
+      const fetchedStatuses: Status[] = await statusesResponse.json();
+      const projectsData = await projectsResponse.json();
+
+      const projects: Project[] = projectsData.items;
+
+      const validStatuses = fetchedStatuses.filter(
+        (status) => status.name.trim() !== ""
+      );
+
+      const statusColumns: Columns = validStatuses.map(
+        (status): Column => ({
+          id: status.id,
+          name: status.name,
+          colorCode: status.colorCode,
+          projects: projects.filter(
+            (project) => project.statusName === status.name
+          ),
+        })
+      );
+
+      setColumns(statusColumns);
+      setStatuses(validStatuses);
+    } catch (error) {
+      console.error("Failed to fetch kanban data:", error);
+    }
+  };
+
+  useEffect(() => {
+    loadKanbanData();
   }, []);
 
   const handleDeleteProject = (projectId: number) => {
@@ -120,6 +124,49 @@ export default function KanbanBoard() {
     });
   };
 
+  const handleCreateProject = async (
+    data: CreateProjectRequest
+  ) => {
+    const response = await fetch("/api/dashboard/projects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      throw new Error(
+        errorData.message || "Failed to create project"
+      );
+    }
+
+    setIsModalOpen(false);
+    await loadKanbanData();
+  };
+
+  const handleUpdateProject = async (
+    id: number,
+    data: UpdateProjectRequest
+  ) => {
+    const response = await fetch(`/api/projects/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+
+      throw new Error(
+        errorData.message || "Failed to update project"
+      );
+    }
+
+    setIsModalOpen(false);
+    await loadKanbanData();
+  };
+
   const totalTasks = columns.reduce(
     (total, column) => total + column.projects.length,
     0
@@ -173,8 +220,12 @@ export default function KanbanBoard() {
 
 
       {isModalOpen && (
-        <AddProjectModal
+        <ProjectModal
+          open={isModalOpen}
+          statuses={statuses}
           onClose={() => setIsModalOpen(false)}
+          onSubmit={handleCreateProject}
+          onUpdate={handleUpdateProject}
         />
       )}
     </section>

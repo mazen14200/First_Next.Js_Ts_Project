@@ -25,7 +25,7 @@ const RoleTable = () => {
   const t = useTranslations("roles");
 
   const [roles, setRoles] = useState<Role[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   /*
    * Pending filters
@@ -300,7 +300,7 @@ const RoleTable = () => {
           title={t("title")}
           description={t("description")}
           recordCount={filteredRoles.length}
-          currentPage={t("title")}
+          currentPage={safeCurrentPage}
           pageSize={pageSize}
           pageSizeOptions={[5, 10, 20, 50]}
           onPageSizeChange={(size) => {
