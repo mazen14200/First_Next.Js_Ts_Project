@@ -26,6 +26,8 @@ import TableHeader from "../../../components/ui/TableHeader/TableHeader";
 import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
 import DatePicker from "../../../components/ui/DatePicker/DatePicker";
 
+import { apiFetch } from "../../../lib/api/client-fetch";
+
 type ProjectsView = "table" | "kanban";
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -165,7 +167,7 @@ const Projects = () => {
       );
     }
 
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/projects?${params.toString()}`
     );
 
@@ -187,7 +189,7 @@ const Projects = () => {
    * Fetch Statuses
    */
   const fetchStatuses = async () => {
-    const response = await fetch(
+    const response = await apiFetch(
       "/api/status"
     );
 
@@ -398,7 +400,7 @@ const Projects = () => {
    */
   const handleOpenAddModal = async () => {
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         "/api/projects/new-code"
       );
 
@@ -436,7 +438,7 @@ const Projects = () => {
     project: ProjectListItem
   ) => {
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `/api/projects/${project.id}`
       );
 
@@ -474,7 +476,7 @@ const Projects = () => {
   const handleCreateProject = async (
     data: CreateProjectRequest
   ) => {
-    const response = await fetch(
+    const response = await apiFetch(
       "/api/projects",
       {
         method: "POST",
@@ -511,7 +513,7 @@ const Projects = () => {
     id: number,
     data: UpdateProjectRequest
   ) => {
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/projects/${id}`,
       {
         method: "PUT",
@@ -566,7 +568,7 @@ const Projects = () => {
   const handleDeleteProject = async (
     id: number
   ) => {
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/projects/${id}`,
       {
         method: "DELETE",

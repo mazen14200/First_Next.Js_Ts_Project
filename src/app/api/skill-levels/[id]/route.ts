@@ -4,6 +4,7 @@ import {
   deleteSkillLevel,
 } from "../../../../features/skill-levels/index";
 
+import { authErrorResponse } from "../../../../lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     id: string;
@@ -34,6 +35,8 @@ export async function PUT(
       { status: 200 }
     );
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error("PUT /api/skill-levels/[id] failed:", error);
 
     return NextResponse.json(
@@ -65,6 +68,8 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error("DELETE /api/skill-levels/[id] failed:", error);
 
     return NextResponse.json(
@@ -73,3 +78,4 @@ export async function DELETE(
     );
   }
 }
+

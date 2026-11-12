@@ -21,6 +21,8 @@ import TableHeader from "../../../../components/ui/TableHeader/TableHeader";
 import TablePagination from "../../../../components/ui/TablePagination/TablePagination";
 import FilterSelect from "../../../../components/ui/FilterSelect/FilterSelect";
 
+import { apiFetch } from "../../../../lib/api/client-fetch";
+
 interface EmployeeSkillsTableProps {
   employeeId: string;
 }
@@ -119,7 +121,7 @@ const EmployeeSkillsTable = ({
       params.set("SkillLevelId", skillLevelId);
     }
 
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/employees/${employeeId}/skills?${params.toString()}`
     );
 
@@ -138,7 +140,7 @@ const EmployeeSkillsTable = ({
   };
 
   const fetchSkills = async () => {
-    const response = await fetch(
+    const response = await apiFetch(
       "/api/skills?PageNumber=1&PageSize=100"
     );
 
@@ -154,7 +156,7 @@ const EmployeeSkillsTable = ({
   };
 
   const fetchSkillLevels = async () => {
-    const response = await fetch(
+    const response = await apiFetch(
       "/api/skill-levels"
     );
 
@@ -328,7 +330,7 @@ const EmployeeSkillsTable = ({
   const handleCreate = async (
     data: CreateEmployeeSkillRequest
   ): Promise<void> => {
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/employees/${employeeId}/skills`,
       {
         method: "POST",
@@ -358,7 +360,7 @@ const EmployeeSkillsTable = ({
     skillId: number,
     data: UpdateEmployeeSkillRequest
   ): Promise<void> => {
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/employees/${employeeId}/skills/${skillId}`,
       {
         method: "PUT",
@@ -392,7 +394,7 @@ const EmployeeSkillsTable = ({
     setIsDeleting(true);
 
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `/api/employees/${employeeId}/skills/${selectedEmployeeSkillForDelete.skillId}`,
         {
           method: "DELETE",

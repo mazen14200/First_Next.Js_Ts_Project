@@ -6,6 +6,8 @@ import type {
   PagedResult,
 } from "../../types/crud.types";
 
+import { apiFetch } from "../../lib/api/client-fetch";
+
 export function defaultToSearchParams(
   params: ListParams
 ): URLSearchParams {
@@ -107,7 +109,7 @@ export function createCrudClient<
     path: string,
     init?: RequestInit
   ): Promise<T> => {
-    const response = await fetch(`${base}${path}`, {
+    const response = await apiFetch(`${base}${path}`, {
       headers: {
         "Content-Type": "application/json",
       },

@@ -5,6 +5,7 @@ import {
   deleteEmployeeSkill,
 } from "../../../../../../features/employees/skills/index";
 
+import { authErrorResponse } from "../../../../../../lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     employeeId: string;
@@ -54,6 +55,8 @@ export async function PUT(
       }
     );
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "PUT /api/employees/[employeeId]/skills/[skillId] failed:",
       error
@@ -109,6 +112,8 @@ export async function DELETE(
       }
     );
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "DELETE /api/employees/[employeeId]/skills/[skillId] failed:",
       error
@@ -124,4 +129,5 @@ export async function DELETE(
     );
   }
 }
+
 

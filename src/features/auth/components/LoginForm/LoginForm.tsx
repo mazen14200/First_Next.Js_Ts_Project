@@ -6,10 +6,17 @@ import styles from './LoginForm.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { sanitizeReturnTo } from '../../../../lib/auth/return-to';
+
 export default function LoginForm() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [sessionExpired] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("reason") === "expired"
+  )
 
   const router = useRouter()
 
@@ -31,13 +38,14 @@ const handleLogin = async (e: React.SyntheticEvent<HTMLFormElement>) => {
 
     const data = await response.json();
 
-    console.log(data);
-
     if (!response.ok) {
       throw new Error(data.message || "Login failed");
     }
 
-    router.push("/");
+    const params = new URLSearchParams(window.location.search);
+    const returnTo = sanitizeReturnTo(params.get("returnTo"));
+
+    router.replace(returnTo ?? "/");
   } catch (err) {
     console.log("Failed", err);
   }
@@ -62,6 +70,12 @@ const handleLogin = async (e: React.SyntheticEvent<HTMLFormElement>) => {
             </a>
 
             <h4>سجل الدخول إلى حسابك</h4>
+
+            {sessionExpired && (
+              <p className={styles.description} style={{ color: '#d4380d' }}>
+                انتهت الجلسة، يرجى تسجيل الدخول مجددًا.
+              </p>
+            )}
 
             <p className={styles.description}>
               أدخل بريدك الإلكتروني وكلمة المرور للوصول إلى لوحة التحكم.

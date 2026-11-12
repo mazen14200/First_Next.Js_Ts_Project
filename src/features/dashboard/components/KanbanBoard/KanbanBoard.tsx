@@ -16,6 +16,8 @@ import type {
   UpdateProjectRequest,
 } from "../../../projects/types/project.types";
 
+import { apiFetch } from "../../../../lib/api/client-fetch";
+
 export default function KanbanBoard() {
   const t = useTranslations("dashboard.kanban");
   const locale = useLocale()
@@ -27,8 +29,8 @@ export default function KanbanBoard() {
   const loadKanbanData = async () => {
     try {
       const [statusesResponse, projectsResponse] = await Promise.all([
-        fetch("/api/dashboard/statuses"),
-        fetch("/api/dashboard/projects"),
+        apiFetch("/api/dashboard/statuses"),
+        apiFetch("/api/dashboard/projects"),
       ]);
 
       if (!statusesResponse.ok) {
@@ -88,7 +90,7 @@ export default function KanbanBoard() {
 
       onOk: async () => {
         try {
-          const response = await fetch(
+          const response = await apiFetch(
             `/api/dashboard/projects/${projectId}`,
             {
               method: "DELETE",
@@ -127,7 +129,7 @@ export default function KanbanBoard() {
   const handleCreateProject = async (
     data: CreateProjectRequest
   ) => {
-    const response = await fetch("/api/dashboard/projects", {
+    const response = await apiFetch("/api/dashboard/projects", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -149,7 +151,7 @@ export default function KanbanBoard() {
     id: number,
     data: UpdateProjectRequest
   ) => {
-    const response = await fetch(`/api/projects/${id}`, {
+    const response = await apiFetch(`/api/projects/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

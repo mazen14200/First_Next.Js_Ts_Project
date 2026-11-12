@@ -7,12 +7,15 @@ import {
 import type { CreateProjectRequest } from "../../../../features/projects/types/project.types";
 import axios from "axios";
 
+import { authErrorResponse } from "../../../../lib/api/auth-error-response";
 export async function GET() {
   try {
     const projects = await getProjects();
 
     return NextResponse.json(projects);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.log("GET PROJECTS ERROR:", error);
 
     return NextResponse.json(
@@ -30,6 +33,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json(project);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.log("POST PROJECT ERROR:", error);
 
     if (axios.isAxiosError(error)) {

@@ -21,6 +21,8 @@ import type {
   PaginatedHistoryResponse,
 } from "../types/history.types";
 
+import { apiFetch } from "../../../lib/api/client-fetch";
+
 interface HistoryTimelineProps {
   users?: {
     id: string;
@@ -142,7 +144,7 @@ const History = ({
       );
     }
 
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/history?${params.toString()}`,
       {
         method: "GET",

@@ -20,6 +20,8 @@ import DeleteDepartmentModal from "./DeleteDepartmentModal";
 import TableHeader from "../../../components/ui/TableHeader/TableHeader";
 import TablePagination from "../../../components/ui/TablePagination/TablePagination";
 
+import { apiFetch } from "../../../lib/api/client-fetch";
+
 const DepartmentTable = () => {
   const locale = useLocale();
   const t = useTranslations("departments");
@@ -63,7 +65,7 @@ const DepartmentTable = () => {
       params.set("Search", search.trim());
     }
 
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/department?${params.toString()}`
     );
 
@@ -191,7 +193,7 @@ const DepartmentTable = () => {
   const handleCreateDepartment = async (
     data: CreateDepartmentRequest
   ): Promise<void> => {
-    const response = await fetch("/api/department", {
+    const response = await apiFetch("/api/department", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -220,7 +222,7 @@ const DepartmentTable = () => {
     id: number,
     data: UpdateDepartmentRequest
   ): Promise<void> => {
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/department/${id}`,
       {
         method: "PUT",
@@ -289,7 +291,7 @@ const DepartmentTable = () => {
     try {
       setIsDeleting(true);
 
-      const response = await fetch(
+      const response = await apiFetch(
         `/api/department/${selectedDepartmentForDelete.id}`,
         {
           method: "DELETE",

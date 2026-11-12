@@ -5,6 +5,7 @@ import {
   getTeamProjects,
 } from "../../../features/team-projects";
 
+import { authErrorResponse } from "../../../lib/api/auth-error-response";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -62,6 +63,8 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(teamProjects);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "GET /api/team-projects error:",
       error
@@ -86,6 +89,8 @@ export async function POST(request: NextRequest) {
       status: 201,
     });
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "POST /api/team-projects error:",
       error

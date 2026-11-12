@@ -4,7 +4,6 @@
     "language": "العربية",
     "logout": "Logout"
   },
-
   "sidebar": {
     "mainMenu": "Main Menu",
     "home": "Home",
@@ -20,21 +19,18 @@
     "status": "Status",
     "history": "History"
   },
-
   "dashboard": {
     "kanban": {
       "eyebrow": "Task Management",
       "title": "Team Tasks",
       "description": "Track task progress and move tasks between stages easily.",
       "totalTasks": "Total Tasks",
-
       "columns": {
         "backlog": "Backlog",
         "todo": "To Do",
         "progress": "In Progress",
         "done": "Done"
       },
-
       "tasks": {
         "settings": {
           "title": "Settings",
@@ -81,7 +77,6 @@
           "description": "Implement footer"
         }
       },
-
       "priority": {
         "high": "High",
         "medium": "Medium",
@@ -89,7 +84,6 @@
       }
     }
   },
-
   "tableHeader": {
     "home": "Home",
     "search": "Search",
@@ -104,8 +98,6 @@
     "reset": "Reset",
     "searchLabel": "Search"
   },
-
-
   "departments": {
     "allDepartments": "All Departments",
     "title": "Departments",
@@ -121,13 +113,12 @@
     "save": "Save Department",
     "editDepartment": "Edit Department",
     "update": "Update Department",
-    "deleteDepartment": "Delete Department", 
-    "deleteConfirmation": "Are you sure you want to delete this department? This action cannot be undone.", 
+    "deleteDepartment": "Delete Department",
+    "deleteConfirmation": "Are you sure you want to delete this department? This action cannot be undone.",
     "confirmDelete": "Delete",
     "emptyTitle": "No Department Found",
     "emptyDescription": "There are no department available. Add a new department to get started."
   },
-
   "teams": {
     "allTeams": "All Teams",
     "title": "Teams",
@@ -158,7 +149,6 @@
     "emptyTitle": "No Teams Found",
     "emptyDescription": "There are no teams available. Add a new team to get started."
   },
-
   "teamProjects": {
     "allTeamProjects": "All Team Projects",
     "title": "Team Projects",
@@ -194,7 +184,6 @@
     "noRate": "—",
     "loadingDetails": "Loading details..."
   },
-
   "projects": {
     "allManagers": "All Managers",
     "allStatuses": "All Statuses",
@@ -239,7 +228,6 @@
     "required": "This field is required",
     "invalidDateRange": "End date must be after start date"
   },
-
   "skillLevels": {
     "allSkillLevels": "All Skill Levels",
     "allRanks": "All Ranks",
@@ -265,7 +253,6 @@
     "emptyTitle": "No Skill Levels Found",
     "emptyDescription": "There are no skill levels available. Add a new skill level to get started."
   },
-
   "skills": {
     "allSkills": "All Skills",
     "allStatuses": "All Statuses",
@@ -299,14 +286,13 @@
     "emptyDescription": "There are no skills available. Add a new skill to get started.",
     "nameArPlaceholder": "Enter Arabic name",
     "nameEnPlaceholder": "Enter English name",
-    "activateSkill": "Activate Skill", 
-    "deactivateSkill": "Deactivate Skill", 
-    "activateConfirmation": "Are you sure you want to activate this skill?", 
-    "deactivateConfirmation": "Are you sure you want to deactivate this skill?", 
-    "activate": "Activate", 
+    "activateSkill": "Activate Skill",
+    "deactivateSkill": "Deactivate Skill",
+    "activateConfirmation": "Are you sure you want to activate this skill?",
+    "deactivateConfirmation": "Are you sure you want to deactivate this skill?",
+    "activate": "Activate",
     "deactivate": "Deactivate"
   },
-
   "employeeSkills": {
     "allSkills": "All Skills",
     "allSkillLevels": "All Skill Levels",
@@ -333,7 +319,6 @@
     "saving": "Saving...",
     "deleting": "Deleting..."
   },
-
   "status": {
     "allStatusNames": "All Status Names",
     "allColors": "All Colors",
@@ -369,11 +354,9 @@
     "colorCodePlaceholder": "Enter color code",
     "displayOrderPlaceholder": "Enter display order"
   },
-
   "history": {
     "title": "History",
     "description": "View and track system activities and user actions.",
-
     "search": "Search history",
     "operation": "Operation",
     "allOperations": "All Operations",
@@ -381,12 +364,9 @@
     "allUsers": "All Users",
     "fromDate": "From Date",
     "toDate": "To Date",
-
     "view": "View",
-
     "tableView": "Table",
     "timelineView": "Timeline",
-
     "date": "Date",
     "time": "Time",
     "performedBy": "Performed By",
@@ -398,15 +378,11 @@
     "status": "Status",
     "statusCode": "Status Code",
     "affectedEntity": "Affected Entity",
-
     "emptyTitle": "No History Found",
     "emptyDescription": "There are no activities available for the selected filters.",
-
     "loading": "Loading history...",
     "noValue": "N/A"
   },
-
-
   "roles": {
     "allRoles": "All Roles",
     "title": "Roles",
@@ -439,6 +415,8 @@
     "emptyDescription": "There are no roles available. Add a new role to get started.",
     "nameArPlaceholder": "Enter Arabic name",
     "nameEnPlaceholder": "Enter English name"
+  },
+  "login": {
+    "sessionExpired": "Your session has expired. Please sign in again."
   }
-
 }

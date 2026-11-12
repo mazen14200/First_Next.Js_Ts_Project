@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { deleteProject } from "../../../../../features/projects/services/projects.service";
 
+import { authErrorResponse } from "../../../../../lib/api/auth-error-response";
 export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -26,6 +27,8 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.log("DELETE PROJECT ERROR:", error);
 
     if (axios.isAxiosError(error)) {

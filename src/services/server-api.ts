@@ -1,6 +1,14 @@
 import axios from "axios";
 import { cookies } from "next/headers";
 
+import { AUTH_COOKIE } from "../lib/auth/constants";
+import { setAuthCookies } from "../lib/auth/cookies";
+import {
+  AuthUnavailableError,
+  SessionExpiredError,
+} from "../lib/auth/errors";
+import { refreshSession } from "../lib/auth/refresh";
+
 const serverApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
@@ -8,30 +16,14 @@ const serverApi = axios.create({
   },
 });
 
-// serverApi.interceptors.request.use(async (config) => {
-//   const cookieStore = await cookies();
-//   const accessToken = cookieStore.get("accessToken")?.value;
-
-//   if (accessToken) {
-//     config.headers.Authorization = `Bearer ${accessToken}`;
-//   }
-
-//   return config;
-// });
-
 serverApi.interceptors.request.use(async (config) => {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
-
-  console.log("🔥🔥 SERVER API REQUEST INTERCEPTOR HIT");
-
-  console.log("🔥 ACCESS TOKEN EXISTS:", !!accessToken);
+  const accessToken = cookieStore.get(
+    AUTH_COOKIE.ACCESS_TOKEN
+  )?.value;
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
-    console.log("🔥 AUTH HEADER WAS SET");
-  } else {
-    console.log("❌ NO ACCESS TOKEN");
   }
 
   return config;
@@ -41,90 +33,72 @@ serverApi.interceptors.response.use(
   (response) => response,
 
   async (error) => {
-    const originalRequest = error.config;
-
-    if (
-      error.response?.status !== 401 ||
-      originalRequest?._retry
-    ) {
+    if (!axios.isAxiosError(error)) {
       return Promise.reject(error);
     }
 
-    originalRequest._retry = true;
+    if (error.response?.status !== 401) {
+      return Promise.reject(error);
+    }
 
-    try {
-      const cookieStore = await cookies();
+    const originalRequest = error.config;
 
-      const accessToken = cookieStore.get("accessToken")?.value;
-      const refreshToken = cookieStore.get("refreshToken")?.value;
+    if (!originalRequest) {
+      return Promise.reject(error);
+    }
 
-      if (!accessToken || !refreshToken) {
-        return Promise.reject(error);
-      }
-
-      console.log("ACCESS TOKEN EXPIRED - TRYING REFRESH");
-
-      const refreshResponse = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/Auth/refresh`,
-        {
-          refreshToken,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      const {
-        accessToken: newAccessToken,
-        refreshToken: newRefreshToken,
-        expiresAt,
-      } = refreshResponse.data;
-
-      console.log("TOKEN REFRESH SUCCESS");
-
-      const cookieOptions = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax" as const,
-        path: "/",
+    const retriedRequest =
+      originalRequest as typeof originalRequest & {
+        _retry?: boolean;
       };
 
-      cookieStore.set(
-        "accessToken",
-        newAccessToken,
-        cookieOptions
-      );
-
-      cookieStore.set(
-        "refreshToken",
-        newRefreshToken,
-        cookieOptions
-      );
-
-      cookieStore.set(
-        "accessTokenExpiresAt",
-        expiresAt,
-        cookieOptions
-      );
-
-      originalRequest.headers.Authorization =
-        `Bearer ${newAccessToken}`;
-
-      return serverApi(originalRequest);
-    } catch (refreshError) {
-      console.log("AUTOMATIC REFRESH FAILED:", refreshError);
-
-      const cookieStore = await cookies();
-
-      cookieStore.delete("accessToken");
-      cookieStore.delete("refreshToken");
-      cookieStore.delete("accessTokenExpiresAt");
-
-      return Promise.reject(refreshError);
+    if (retriedRequest._retry) {
+      return Promise.reject(new SessionExpiredError());
     }
+
+    const cookieStore = await cookies();
+
+    const accessToken = cookieStore.get(
+      AUTH_COOKIE.ACCESS_TOKEN
+    )?.value;
+    const refreshToken = cookieStore.get(
+      AUTH_COOKIE.REFRESH_TOKEN
+    )?.value;
+
+    if (!refreshToken) {
+      return Promise.reject(new SessionExpiredError());
+    }
+
+    let tokens;
+
+    try {
+      tokens = await refreshSession(refreshToken, accessToken);
+    } catch (refreshError) {
+      if (refreshError instanceof AuthUnavailableError) {
+        return Promise.reject(refreshError);
+      }
+
+      return Promise.reject(
+        refreshError instanceof SessionExpiredError
+          ? refreshError
+          : new SessionExpiredError()
+      );
+    }
+
+    try {
+      setAuthCookies(cookieStore, tokens);
+    } catch {
+      console.error(
+        "Failed to persist refreshed auth cookies. " +
+          "serverApi must only be called from Route Handlers or Server Actions."
+      );
+    }
+
+    retriedRequest._retry = true;
+    retriedRequest.headers.Authorization =
+      `Bearer ${tokens.accessToken}`;
+
+    return serverApi(retriedRequest);
   }
 );
 

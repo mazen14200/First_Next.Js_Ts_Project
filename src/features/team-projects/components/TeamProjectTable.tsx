@@ -19,6 +19,8 @@ import TableHeader from "../../../components/ui/TableHeader/TableHeader";
 import TablePagination from "../../../components/ui/TablePagination/TablePagination";
 import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
 
+import { apiFetch } from "../../../lib/api/client-fetch";
+
 const TeamProjectTable = () => {
   const locale = useLocale();
   const t = useTranslations("teamProjects");
@@ -110,7 +112,7 @@ const TeamProjectTable = () => {
       params.set("Search", search.trim());
     }
 
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/team-projects?${params.toString()}`
     );
 
@@ -131,10 +133,10 @@ const TeamProjectTable = () => {
   const fetchOptions = async () => {
     const [teamsResponse, projectsResponse] =
       await Promise.all([
-        fetch(
+        apiFetch(
           "/api/teams?PageNumber=1&PageSize=100"
         ),
-        fetch(
+        apiFetch(
           "/api/projects?PageNumber=1&PageSize=100"
         ),
       ]);
@@ -352,7 +354,7 @@ const TeamProjectTable = () => {
       descriptionEN: string | null;
     }
   ): Promise<void> => {
-    const response = await fetch(
+    const response = await apiFetch(
       "/api/team-projects",
       {
         method: "POST",
@@ -391,7 +393,7 @@ const TeamProjectTable = () => {
       descriptionEN: string | null;
     }
   ): Promise<void> => {
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/team-projects/${id}`,
       {
         method: "PUT",
@@ -438,7 +440,7 @@ const TeamProjectTable = () => {
       );
       setIsModalOpen(true);
 
-      const response = await fetch(
+      const response = await apiFetch(
         `/api/team-projects/${teamProject.id}`
       );
 
@@ -500,7 +502,7 @@ const TeamProjectTable = () => {
       try {
         setIsDeleting(true);
 
-        const response = await fetch(
+        const response = await apiFetch(
           `/api/team-projects/${selectedTeamProjectForDelete.id}`,
           {
             method: "DELETE",

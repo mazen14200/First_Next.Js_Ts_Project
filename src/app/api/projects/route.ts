@@ -5,6 +5,7 @@ import {
   getProjects,
 } from "../../../features/projects";
 
+import { authErrorResponse } from "../../../lib/api/auth-error-response";
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -45,6 +46,8 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(data);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error("Failed to fetch projects:", error);
 
     return NextResponse.json(
@@ -62,6 +65,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(data);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error("Failed to create project:", error);
 
     return NextResponse.json(

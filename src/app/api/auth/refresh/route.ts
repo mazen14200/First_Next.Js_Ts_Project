@@ -1,52 +1,53 @@
 import { NextRequest, NextResponse } from "next/server";
-import api from "../../../../services/server-api";
+
+import { AUTH_COOKIE } from "../../../../lib/auth/constants";
+import { setAuthCookies } from "../../../../lib/auth/cookies";
+import { refreshSession } from "../../../../lib/auth/refresh";
+import { authErrorResponse } from "../../../../lib/api/auth-error-response";
 
 export async function POST(request: NextRequest) {
   try {
-    const accessToken = request.cookies.get("accessToken")?.value;
-    const refreshToken = request.cookies.get("refreshToken")?.value;
+    const accessToken = request.cookies.get(
+      AUTH_COOKIE.ACCESS_TOKEN
+    )?.value;
+    const refreshToken = request.cookies.get(
+      AUTH_COOKIE.REFRESH_TOKEN
+    )?.value;
 
-    if (!accessToken || !refreshToken) {
+    if (!refreshToken) {
       return NextResponse.json(
-        { message: "Tokens not found" },
+        {
+          code: "SESSION_EXPIRED",
+          message: "Session expired",
+        },
         { status: 401 }
       );
     }
 
-    const response = await api.post("/Auth/refresh", {refreshToken},
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+    const tokens = await refreshSession(
+      refreshToken,
+      accessToken
     );
-
-    const { accessToken: newAccessToken, refreshToken: newRefreshToken, expiresAt } = response.data;
 
     const res = NextResponse.json({
       message: "Token refreshed successfully",
     });
 
-    const cookieOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax" as const,
-      path: "/",
-    };
-
-    res.cookies.set("accessToken", newAccessToken, cookieOptions);
-
-    res.cookies.set("refreshToken", newRefreshToken, cookieOptions);
-
-    res.cookies.set("accessTokenExpiresAt", expiresAt, cookieOptions);
+    setAuthCookies(res.cookies, tokens);
 
     return res;
   } catch (error) {
-    console.log("REFRESH ERROR:", error);
+    const authResponse = authErrorResponse(error);
+
+    if (authResponse) {
+      return authResponse;
+    }
+
+    console.error("Refresh route error:", error);
 
     return NextResponse.json(
       { message: "Refresh failed" },
-      { status: 401 }
+      { status: 500 }
     );
   }
 }

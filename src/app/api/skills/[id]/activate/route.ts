@@ -8,6 +8,7 @@ import {
   toErrorResponse,
 } from "../../../../../lib/api/route-helpers";
 
+import { authErrorResponse } from "../../../../../lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     id: string;
@@ -32,6 +33,8 @@ export async function PATCH(
       message: "Skill activated successfully",
     });
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "PATCH /api/skills/[id]/activate failed:",
       error
@@ -43,3 +46,4 @@ export async function PATCH(
     );
   }
 }
+

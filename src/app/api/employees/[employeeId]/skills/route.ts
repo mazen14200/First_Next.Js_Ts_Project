@@ -5,6 +5,7 @@ import {
   createEmployeeSkill,
 } from "../../../../../features/employees/skills/index";
 
+import { authErrorResponse } from "../../../../../lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     employeeId: string;
@@ -84,6 +85,8 @@ export async function GET(
 
     return NextResponse.json(employeeSkills);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "GET /api/employees/[employeeId]/skills failed:",
       error
@@ -125,6 +128,8 @@ export async function POST(
       status: 201,
     });
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "POST /api/employees/[employeeId]/skills failed:",
       error
@@ -140,4 +145,5 @@ export async function POST(
     );
   }
 }
+
 

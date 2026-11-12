@@ -4,7 +4,6 @@
     "language": "English",
     "logout": "تسجيل الخروج"
   },
-
   "sidebar": {
     "mainMenu": "القائمة الرئيسية",
     "home": "الرئيسية",
@@ -20,21 +19,18 @@
     "status": "الحالات",
     "history": "السجل"
   },
-
   "dashboard": {
     "kanban": {
       "eyebrow": "إدارة المهام",
       "title": "مهام الفريق",
       "description": "تابع حالة المهام وحركها بين المراحل بسهولة.",
       "totalTasks": "إجمالي المهام",
-
       "columns": {
         "backlog": "قائمة الانتظار",
         "todo": "قيد الانتظار",
         "progress": "قيد التنفيذ",
         "done": "مكتملة"
       },
-
       "tasks": {
         "settings": {
           "title": "الإعدادات",
@@ -81,7 +77,6 @@
           "description": "تنفيذ الفوتر"
         }
       },
-
       "priority": {
         "high": "عالية",
         "medium": "متوسطة",
@@ -89,7 +84,6 @@
       }
     }
   },
-
   "tableHeader": {
     "home": "الرئيسية",
     "search": "بحث",
@@ -104,8 +98,6 @@
     "reset": "إعادة تعيين",
     "searchLabel": "بحث"
   },
-
-
   "departments": {
     "allDepartments": "كل الأقسام",
     "title": "الأقسام",
@@ -121,13 +113,12 @@
     "save": "حفظ القسم",
     "editDepartment": "تعديل القسم",
     "update": "تحديث القسم",
-    "deleteDepartment": "حذف القسم", 
-    "deleteConfirmation": "هل أنت متأكد من حذف هذا القسم؟ لا يمكن التراجع عن هذا الإجراء.", 
+    "deleteDepartment": "حذف القسم",
+    "deleteConfirmation": "هل أنت متأكد من حذف هذا القسم؟ لا يمكن التراجع عن هذا الإجراء.",
     "confirmDelete": "حذف",
     "emptyTitle": "لا توجد أقسام",
     "emptyDescription": "لا توجد أقسام متاحة. أضف قسم جديد للبدء."
   },
-
   "teams": {
     "allTeams": "كل الفرق",
     "title": "الفرق",
@@ -158,7 +149,6 @@
     "emptyTitle": "لا توجد فرق",
     "emptyDescription": "لا توجد فرق متاحة. أضف فريقًا جديدًا للبدء."
   },
-
   "teamProjects": {
     "allTeamProjects": "كل مشاريع الفرق",
     "title": "مشاريع الفرق",
@@ -194,7 +184,6 @@
     "noRate": "—",
     "loadingDetails": "جارٍ تحميل البيانات..."
   },
-
   "projects": {
     "allManagers": "جميع المديرين",
     "allStatuses": "جميع الحالات",
@@ -239,7 +228,6 @@
     "required": "هذا الحقل مطلوب",
     "invalidDateRange": "يجب أن يكون تاريخ النهاية بعد تاريخ البداية"
   },
-
   "skillLevels": {
     "allSkillLevels": "كل مستويات المهارة",
     "allRanks": "كل الرتب",
@@ -265,7 +253,6 @@
     "emptyTitle": "لا توجد مستويات مهارات",
     "emptyDescription": "لا توجد مستويات مهارات متاحة. أضف مستوى مهارة جديدًا للبدء."
   },
-
   "skills": {
     "allSkills": "كل المهارات",
     "allStatuses": "كل الحالات",
@@ -298,14 +285,13 @@
     "emptyDescription": "لا توجد مهارات متاحة. أضف مهارة جديدة للبدء.",
     "nameArPlaceholder": "أدخل الاسم بالعربية",
     "nameEnPlaceholder": "أدخل الاسم بالإنجليزية",
-    "activateSkill": "تفعيل المهارة", 
-    "deactivateSkill": "إلغاء تفعيل المهارة", 
-    "activateConfirmation": "هل أنت متأكد من تفعيل هذه المهارة؟", 
-    "deactivateConfirmation": "هل أنت متأكد من إلغاء تفعيل هذه المهارة؟", 
-    "activate": "تفعيل", 
+    "activateSkill": "تفعيل المهارة",
+    "deactivateSkill": "إلغاء تفعيل المهارة",
+    "activateConfirmation": "هل أنت متأكد من تفعيل هذه المهارة؟",
+    "deactivateConfirmation": "هل أنت متأكد من إلغاء تفعيل هذه المهارة؟",
+    "activate": "تفعيل",
     "deactivate": "إلغاء التفعيل"
   },
-
   "employeeSkills": {
     "allSkills": "كل المهارات",
     "allSkillLevels": "كل مستويات المهارة",
@@ -332,7 +318,6 @@
     "saving": "جارٍ الحفظ...",
     "deleting": "جارٍ الحذف..."
   },
-
   "status": {
     "allStatusNames": "كل أسماء الحالات",
     "allColors": "كل الألوان",
@@ -368,11 +353,9 @@
     "colorCodePlaceholder": "أدخل كود اللون",
     "displayOrderPlaceholder": "أدخل ترتيب العرض"
   },
-
   "history": {
     "title": "السجل",
     "description": "عرض وتتبع أنشطة النظام وإجراءات المستخدمين.",
-
     "search": "البحث في السجل",
     "operation": "العملية",
     "allOperations": "كل العمليات",
@@ -380,12 +363,9 @@
     "allUsers": "كل المستخدمين",
     "fromDate": "من تاريخ",
     "toDate": "إلى تاريخ",
-
     "view": "عرض",
-
     "tableView": "جدول",
     "timelineView": "خط زمني",
-
     "date": "التاريخ",
     "time": "الوقت",
     "performedBy": "بواسطة",
@@ -397,16 +377,11 @@
     "status": "الحالة",
     "statusCode": "رمز الحالة",
     "affectedEntity": "العنصر المتأثر",
-
     "emptyTitle": "لا يوجد سجل",
     "emptyDescription": "لا توجد أنشطة متاحة للفلاتر المحددة.",
-
     "loading": "جارٍ تحميل السجل...",
     "noValue": "غير متوفر"
   },
-
-
-
   "roles": {
     "allRoles": "كل الأدوار",
     "title": "الأدوار",
@@ -439,6 +414,8 @@
     "emptyDescription": "لا توجد أدوار متاحة. أضف دورًا جديدًا للبدء.",
     "nameArPlaceholder": "أدخل الاسم بالعربية",
     "nameEnPlaceholder": "أدخل الاسم بالإنجليزية"
+  },
+  "login": {
+    "sessionExpired": "انتهت الجلسة، يرجى تسجيل الدخول مجددًا."
   }
-
 }

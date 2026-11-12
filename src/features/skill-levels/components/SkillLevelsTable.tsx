@@ -20,6 +20,8 @@ import TableHeader from "../../../components/ui/TableHeader/TableHeader";
 import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
 import TablePagination from "../../../components/ui/TablePagination/TablePagination";
 
+import { apiFetch } from "../../../lib/api/client-fetch";
+
 const SkillLevelsTable = () => {
   const locale = useLocale();
   const t = useTranslations("skillLevels");
@@ -51,7 +53,7 @@ const SkillLevelsTable = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchSkillLevels = async () => {
-    const response = await fetch("/api/skill-levels");
+    const response = await apiFetch("/api/skill-levels");
 
     if (!response.ok) {
       throw new Error("Failed to fetch skill levels");
@@ -162,7 +164,7 @@ const SkillLevelsTable = () => {
   const handleCreate = async (
     data: CreateSkillLevelRequest
   ): Promise<void> => {
-    const response = await fetch(
+    const response = await apiFetch(
       "/api/skill-levels",
       {
         method: "POST",
@@ -192,7 +194,7 @@ const SkillLevelsTable = () => {
     id: number,
     data: UpdateSkillLevelRequest
   ): Promise<void> => {
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/skill-levels/${id}`,
       {
         method: "PUT",
@@ -226,7 +228,7 @@ const SkillLevelsTable = () => {
     setIsDeleting(true);
 
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `/api/skill-levels/${selectedSkillLevelForDelete.id}`,
         {
           method: "DELETE",

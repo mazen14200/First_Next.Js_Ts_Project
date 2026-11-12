@@ -1,45 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
-import api from "../../../../services/server-api";
+
+import { authBackend } from "../../../../lib/auth/backend";
+import { AUTH_COOKIE } from "../../../../lib/auth/constants";
+import { clearAuthCookies } from "../../../../lib/auth/cookies";
 
 export async function POST(request: NextRequest) {
-  try {
-    const accessToken = request.cookies.get("accessToken")?.value;
-    const refreshToken = request.cookies.get("refreshToken")?.value;
+  const accessToken = request.cookies.get(
+    AUTH_COOKIE.ACCESS_TOKEN
+  )?.value;
+  const refreshToken = request.cookies.get(
+    AUTH_COOKIE.REFRESH_TOKEN
+  )?.value;
 
-    if (!accessToken || !refreshToken) {
-      return NextResponse.json(
-        { message: "Tokens not found" },
-        { status: 401 }
+  /*
+   * Best-effort token revocation on the backend.
+   * Logout always succeeds locally even if the
+   * backend is unreachable or tokens are missing.
+   */
+  if (accessToken && refreshToken) {
+    try {
+      await authBackend.post(
+        "/Auth/logout",
+        { refreshToken, accessToken },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
+    } catch (error) {
+      console.error("Backend logout failed:", error);
     }
-
-    await api.post("/Auth/logout",
-    {
-        refreshToken,
-        accessToken,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-
-    const res = NextResponse.json({
-      message: "Logout successful",
-    });
-
-    res.cookies.delete("accessToken");
-    res.cookies.delete("refreshToken");
-    res.cookies.delete("accessTokenExpiresAt");
-
-    return res;
-  } catch (error) {
-    console.log("LOGOUT ERROR:", error);
-
-    return NextResponse.json(
-      { message: "Logout failed" },
-      { status: 401 }
-    );
   }
+
+  const res = NextResponse.json({
+    message: "Logout successful",
+  });
+
+  clearAuthCookies(res.cookies);
+
+  return res;
 }

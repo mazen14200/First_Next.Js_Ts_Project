@@ -20,6 +20,8 @@ import type {
 import StatusModal from "./StatusModal";
 import DeleteStatusModal from "./DeleteStatusModal";
 
+import { apiFetch } from "../../../lib/api/client-fetch";
+
 const StatusTable = () => {
   const t = useTranslations("status");
 
@@ -57,7 +59,7 @@ const StatusTable = () => {
     useState(false);
 
   const fetchStatuses = async () => {
-    const response = await fetch("/api/status");
+    const response = await apiFetch("/api/status");
 
     if (!response.ok) {
       throw new Error("Failed to fetch statuses");
@@ -192,7 +194,7 @@ const StatusTable = () => {
   const handleCreate = async (
     data: CreateStatusRequest
   ): Promise<void> => {
-    const response = await fetch(
+    const response = await apiFetch(
       "/api/status",
       {
         method: "POST",
@@ -222,7 +224,7 @@ const StatusTable = () => {
     id: number,
     data: UpdateStatusRequest
   ): Promise<void> => {
-    const response = await fetch(
+    const response = await apiFetch(
       `/api/status/${id}`,
       {
         method: "PUT",
@@ -256,7 +258,7 @@ const StatusTable = () => {
     setIsDeleting(true);
 
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `/api/status/${selectedStatusForDelete.id}`,
         {
           method: "DELETE",

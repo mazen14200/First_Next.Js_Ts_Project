@@ -9,6 +9,7 @@ import type {
   UpdateStatusRequest,
 } from "../../../../features/status/index";
 
+import { authErrorResponse } from "../../../../lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     id: string;
@@ -39,6 +40,8 @@ export async function PUT(
       { status: 200 }
     );
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error("Failed to update status:", error);
 
     return NextResponse.json(
@@ -70,6 +73,8 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error("Failed to delete status:", error);
 
     return NextResponse.json(

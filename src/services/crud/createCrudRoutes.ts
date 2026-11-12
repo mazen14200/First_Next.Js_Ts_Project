@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import type { ListParams } from "../../types/crud.types";
 
+import { authErrorResponse } from "../../lib/api/auth-error-response";
 import {
   invalidIdResponse,
   invalidPaginationResponse,
@@ -69,6 +70,8 @@ export function createCrudRoutes<
 
         return NextResponse.json(result);
       } catch (error) {
+         const authResponse = authErrorResponse(error);
+         if (authResponse) return authResponse;
         console.error(
           `GET /api/${entityName} failed:`,
           error
@@ -91,6 +94,8 @@ export function createCrudRoutes<
           status: createStatus,
         });
       } catch (error) {
+         const authResponse = authErrorResponse(error);
+         if (authResponse) return authResponse;
         console.error(
           `POST /api/${entityName} failed:`,
           error
@@ -123,6 +128,8 @@ export function createCrudRoutes<
 
         return NextResponse.json(entity);
       } catch (error) {
+         const authResponse = authErrorResponse(error);
+         if (authResponse) return authResponse;
         console.error(
           `GET /api/${entityName}/[id] failed:`,
           error
@@ -162,6 +169,8 @@ export function createCrudRoutes<
           message: `${entityName} updated successfully.`,
         });
       } catch (error) {
+         const authResponse = authErrorResponse(error);
+         if (authResponse) return authResponse;
         console.error(
           `PUT /api/${entityName}/[id] failed:`,
           error
@@ -192,6 +201,8 @@ export function createCrudRoutes<
           message: `${entityName} deleted successfully.`,
         });
       } catch (error) {
+         const authResponse = authErrorResponse(error);
+         if (authResponse) return authResponse;
         console.error(
           `DELETE /api/${entityName}/[id] failed:`,
           error

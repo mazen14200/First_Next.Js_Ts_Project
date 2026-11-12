@@ -6,6 +6,7 @@ import {
   updateProject,
 } from "../../../../features/projects";
 
+import { authErrorResponse } from "../../../../lib/api/auth-error-response";
 type RouteContext = {
   params: Promise<{
     id: string;
@@ -32,6 +33,8 @@ export async function GET(
 
     return NextResponse.json(data);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error("Failed to fetch project:", error);
 
     return NextResponse.json(
@@ -66,6 +69,8 @@ export async function PUT(
 
     return NextResponse.json(data);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error("Failed to update project:", error);
 
     return NextResponse.json(
@@ -97,6 +102,8 @@ export async function DELETE(
       message: "Project deleted successfully",
     });
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error("Failed to delete project:", error);
 
     return NextResponse.json(

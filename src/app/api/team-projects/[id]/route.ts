@@ -6,6 +6,7 @@ import {
   updateTeamProject,
 } from "../../../../features/team-projects";
 
+import { authErrorResponse } from "../../../../lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     id: string;
@@ -37,6 +38,8 @@ export async function GET(
 
     return NextResponse.json(teamProject);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "GET /api/team-projects/[id] error:",
       error
@@ -81,6 +84,8 @@ export async function PUT(
 
     return NextResponse.json(teamProject);
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "PUT /api/team-projects/[id] error:",
       error
@@ -125,6 +130,8 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (error) {
+     const authResponse = authErrorResponse(error);
+     if (authResponse) return authResponse;
     console.error(
       "DELETE /api/team-projects/[id] error:",
       error

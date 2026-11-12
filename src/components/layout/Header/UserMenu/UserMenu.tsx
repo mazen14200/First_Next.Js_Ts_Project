@@ -13,10 +13,12 @@ import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
-import axios from "axios";
+
+import { useLogout } from "../../../../features/auth/hooks/useLogout";
 
 export default function UserMenu() {
   const router = useRouter();
+  const logout = useLogout();
   const [open, setOpen] = useState(false);
 
   const locale = useLocale();
@@ -42,18 +44,8 @@ export default function UserMenu() {
       icon: <LogoutOutlined />,
       label: t("logout"),
       danger: true,
-      onClick: async () => {
-        try {
-          const response = await axios.post("/api/auth/logout");
-
-          console.log("LOGOUT RESULT:", response.data);
-
-          if (response.status === 200) {
-            router.replace("/login");
-          }
-        } catch (error) {
-          console.log("LOGOUT ERROR:", error);
-        }
+      onClick: () => {
+        void logout();
       },
     },
   ];

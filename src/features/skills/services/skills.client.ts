@@ -11,6 +11,8 @@ import type {
   UpdateSkillRequest,
 } from "../types/skills.types";
 
+import { apiFetch } from "../../../lib/api/client-fetch";
+
 const base = createCrudClient<
   Skill,
   CreateSkillRequest,
@@ -38,7 +40,7 @@ export const skillsClient = {
   ): Promise<void> => {
     const action = isActive ? "activate" : "deactivate";
 
-    const response = await fetch(`/api/skills/${id}/${action}`, {
+    const response = await apiFetch(`/api/skills/${id}/${action}`, {
       method: "PATCH",
     });
 
