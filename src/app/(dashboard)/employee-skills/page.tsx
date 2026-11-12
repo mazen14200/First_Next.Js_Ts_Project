@@ -1,4 +1,4 @@
-import EmployeeSkillsTable from "../../../features/employees/skills/components/EmployeeSkillsTable";
+import EmployeeSkillsTable from "@/features/employees/skills/components/EmployeeSkillsTable";
 
 const EmployeeSkillsPage = () => {
   return (

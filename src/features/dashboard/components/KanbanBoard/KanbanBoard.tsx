@@ -5,18 +5,18 @@ import { useTranslations, useLocale } from "next-intl";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 
-import styles from "./KanbanBoard.module.css";
+import styles from "@/features/dashboard/components/KanbanBoard/KanbanBoard.module.css";
 
-import ProjectModal from "../../../projects/components/ProjectsModal";
+import ProjectModal from "@/features/projects/components/ProjectsModal";
 
-import type { Column, Columns, Project } from "../../types/Kanban.types";
-import type { Status } from "../../types/status.types";
+import type { Column, Columns, Project } from "@/features/dashboard/types/Kanban.types";
+import type { Status } from "@/features/dashboard/types/status.types";
 import type {
   CreateProjectRequest,
   UpdateProjectRequest,
-} from "../../../projects/types/project.types";
+} from "@/features/projects/types/project.types";
 
-import { apiFetch } from "../../../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 export default function KanbanBoard() {
   const t = useTranslations("dashboard.kanban");

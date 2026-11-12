@@ -4,10 +4,10 @@ export {
   createStatus,
   updateStatus,
   deleteStatus,
-} from "./services/status.services";
+} from "@/features/status/services/status.services";
 
 export type {
   Status,
   CreateStatusRequest,
   UpdateStatusRequest,
-} from "./types/status.types";
+} from "@/features/status/types/status.types";

@@ -1,4 +1,4 @@
-import StatusTable from "../../../features/status/components/StatusTable";
+import StatusTable from "@/features/status/components/StatusTable";
 
 export default function SkillLevelsPage() {
   return (

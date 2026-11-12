@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import { useLocale, useTranslations } from "next-intl";
 
-import type { TeamProject } from "../types/team-project.types";
+import type { TeamProject } from "@/features/team-projects/types/team-project.types";
 
 interface DeleteTeamProjectModalProps {
   teamProject: TeamProject;

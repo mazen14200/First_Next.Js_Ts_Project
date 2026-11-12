@@ -1,4 +1,4 @@
-import type { ApiErrorBody } from "../../types/crud.types";
+import type { ApiErrorBody } from "@/types/crud.types";
 
 export class ApiError extends Error {
   readonly status: number;

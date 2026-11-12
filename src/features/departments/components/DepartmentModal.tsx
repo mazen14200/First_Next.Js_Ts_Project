@@ -7,7 +7,7 @@ import type {
   CreateDepartmentRequest,
   Department,
   UpdateDepartmentRequest,
-} from "../types/department.types";
+} from "@/features/departments/types/department.types";
 
 interface DepartmentModalProps {
   open: boolean;

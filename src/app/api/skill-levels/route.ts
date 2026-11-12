@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 import {
   getSkillLevels,
   createSkillLevel,
-} from "../../../features/skill-levels/index";
+} from "@/features/skill-levels";
 
-import { authErrorResponse } from "../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 export async function GET() {
   try {
     const skillLevels = await getSkillLevels();

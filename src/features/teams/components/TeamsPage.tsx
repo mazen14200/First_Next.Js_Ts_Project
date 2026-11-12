@@ -2,28 +2,28 @@
 
 import { useLocale, useTranslations } from "next-intl";
 
-import { useCrudList } from "../../../hooks/useCrudList";
+import { useCrudList } from "@/hooks/useCrudList";
 import {
   ConfirmModal,
   DataTable,
   FormModal,
-} from "../../../components/shared";
-import type { DataTableColumn } from "../../../components/shared";
-import TableHeader from "../../../components/ui/TableHeader/TableHeader";
-import { pickLocalized } from "../../../utils/localized";
+} from "@/components/shared";
+import type { DataTableColumn } from "@/components/shared";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import { pickLocalized } from "@/utils/localized";
 
 import type {
   CreateTeamRequest,
   Team,
   UpdateTeamRequest,
-} from "../types/team.types";
+} from "@/features/teams/types/team.types";
 
-import { teamsClient } from "../services/teams.client";
+import { teamsClient } from "@/features/teams/services/teams.client";
 import {
   teamFields,
   toTeamFormValues,
   toTeamPayload,
-} from "../config/teams.fields";
+} from "@/features/teams/config/teams.fields";
 
 const TeamsPage = () => {
   const locale = useLocale();

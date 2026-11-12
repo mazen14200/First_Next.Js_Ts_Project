@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   createProject,
   getProjects,
-} from "../../../features/projects";
+} from "@/features/projects";
 
-import { authErrorResponse } from "../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;

@@ -9,7 +9,7 @@ import {
 import { useLocale } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import styles from "./DatePicker.module.css";
+import styles from "@/components/ui/DatePicker/DatePicker.module.css";
 
 interface DatePickerProps {
   label: string;

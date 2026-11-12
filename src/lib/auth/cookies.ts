@@ -1,9 +1,9 @@
 import {
   AUTH_COOKIE,
   authCookieOptions,
-} from "./constants";
+} from "@/lib/auth/constants";
 
-import type { AuthTokens } from "../../features/auth/types/auth.types";
+import type { AuthTokens } from "@/features/auth/types/auth.types";
 
 interface CookieWriter {
   set: (

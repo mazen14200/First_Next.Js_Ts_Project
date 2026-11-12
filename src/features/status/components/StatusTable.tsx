@@ -7,20 +7,20 @@ import {
 } from "@ant-design/icons";
 import { useTranslations } from "next-intl";
 
-import TableHeader from "../../../components/ui/TableHeader/TableHeader";
-import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
-import TablePagination from "../../../components/ui/TablePagination/TablePagination";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
 
 import type {
   CreateStatusRequest,
   Status,
   UpdateStatusRequest,
-} from "../index";
+} from "@/features/status";
 
-import StatusModal from "./StatusModal";
-import DeleteStatusModal from "./DeleteStatusModal";
+import StatusModal from "@/features/status/components/StatusModal";
+import DeleteStatusModal from "@/features/status/components/DeleteStatusModal";
 
-import { apiFetch } from "../../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 const StatusTable = () => {
   const t = useTranslations("status");

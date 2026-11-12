@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import {
   updateSkillLevel,
   deleteSkillLevel,
-} from "../../../../features/skill-levels/index";
+} from "@/features/skill-levels";
 
-import { authErrorResponse } from "../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     id: string;

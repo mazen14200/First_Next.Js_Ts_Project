@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-import { deleteProject } from "../../../../../features/projects/services/projects.service";
+import { deleteProject } from "@/features/projects/services/projects.service";
 
-import { authErrorResponse } from "../../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }

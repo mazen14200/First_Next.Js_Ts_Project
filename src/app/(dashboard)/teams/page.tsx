@@ -1,4 +1,4 @@
-import TeamsPage from "../../../features/teams/components/TeamsPage";
+import TeamsPage from "@/features/teams/components/TeamsPage";
 
 export default function TeamsRoutePage() {
   return (

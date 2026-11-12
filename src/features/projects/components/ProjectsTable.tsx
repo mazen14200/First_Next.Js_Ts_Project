@@ -6,9 +6,9 @@ import {
 } from "@ant-design/icons";
 import { useLocale, useTranslations } from "next-intl";
 
-import TablePagination from "../../../components/ui/TablePagination/TablePagination";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
 
-import type { ProjectListItem } from "../types/project.types";
+import type { ProjectListItem } from "@/features/projects/types/project.types";
 
 interface ProjectsTableProps {
   projects: ProjectListItem[];

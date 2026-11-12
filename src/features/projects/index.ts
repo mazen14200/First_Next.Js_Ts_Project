@@ -5,7 +5,7 @@ export {
   updateProject,
   deleteProject,
   getNewProjectCode,
-} from "./services/projects.service";
+} from "@/features/projects/services/projects.service";
 
 
 export type {
@@ -16,5 +16,5 @@ export type {
   CreateProjectRequest,
   UpdateProjectRequest,
   NewProjectCodeResponse,
-} from "./types/project.types";
+} from "@/features/projects/types/project.types";
 

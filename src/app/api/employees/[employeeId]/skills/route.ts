@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 import {
   getEmployeeSkills,
   createEmployeeSkill,
-} from "../../../../../features/employees/skills/index";
+} from "@/features/employees/skills";
 
-import { authErrorResponse } from "../../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     employeeId: string;

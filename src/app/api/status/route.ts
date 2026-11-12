@@ -3,13 +3,13 @@ import { NextResponse } from "next/server";
 import {
   createStatus,
   getStatuses,
-} from "../../../features/status/index";
+} from "@/features/status";
 
 import type {
   CreateStatusRequest,
-} from "../../../features/status/index";
+} from "@/features/status";
 
-import { authErrorResponse } from "../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 export async function GET() {
   try {
     const statuses = await getStatuses();

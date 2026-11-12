@@ -1,4 +1,4 @@
-import serverApi from "../../../services/server-api";
+import serverApi from "@/services/server-api";
 
 import type {
   CreateProjectRequest,
@@ -7,7 +7,7 @@ import type {
   Project,
   ProjectFilters,
   UpdateProjectRequest,
-} from "../types/project.types";
+} from "@/features/projects/types/project.types";
 
 const PROJECTS_ENDPOINT = "/projects";
 

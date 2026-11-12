@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import styles from "./Header.module.css";
+import styles from "@/components/layout/Header/Header.module.css";
 import {
   BellOutlined,
   CheckOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
 
-import UserMenu from "./UserMenu/UserMenu";
+import UserMenu from "@/components/layout/Header/UserMenu/UserMenu";
 
 const notifications = [
   {

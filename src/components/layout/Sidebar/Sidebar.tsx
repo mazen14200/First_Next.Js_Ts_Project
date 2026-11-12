@@ -19,7 +19,7 @@ import {
 
 import { useTranslations } from "next-intl";
 
-import styles from "./Sidebar.module.css";
+import styles from "@/components/layout/Sidebar/Sidebar.module.css";
 import { useState } from "react";
 
 export default function Sidebar({

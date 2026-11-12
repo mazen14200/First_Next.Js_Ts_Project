@@ -3,7 +3,7 @@
 import { Select } from "antd";
 import type { SelectProps } from "antd";
 
-import styles from "./FilterSelect.module.css";
+import styles from "@/components/ui/FilterSelect/FilterSelect.module.css";
 
 interface FilterSelectProps extends SelectProps {
   label?: string;

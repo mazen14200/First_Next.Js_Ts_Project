@@ -3,30 +3,30 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
-import { useCrudList } from "../../../hooks/useCrudList";
+import { useCrudList } from "@/hooks/useCrudList";
 import {
   ConfirmModal,
   DataTable,
   FormModal,
-} from "../../../components/shared";
-import type { DataTableColumn } from "../../../components/shared";
-import TableHeader from "../../../components/ui/TableHeader/TableHeader";
-import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
-import { pickLocalized } from "../../../utils/localized";
+} from "@/components/shared";
+import type { DataTableColumn } from "@/components/shared";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
+import { pickLocalized } from "@/utils/localized";
 
 import type {
   CreateSkillRequest,
   Skill,
   SkillFilters,
   UpdateSkillRequest,
-} from "../types/skills.types";
+} from "@/features/skills/types/skills.types";
 
-import { skillsClient } from "../services/skills.client";
+import { skillsClient } from "@/features/skills/services/skills.client";
 import {
   skillFields,
   toSkillFormValues,
   toSkillPayload,
-} from "../config/skills.fields";
+} from "@/features/skills/config/skills.fields";
 
 const SkillsPage = () => {
   const locale = useLocale();

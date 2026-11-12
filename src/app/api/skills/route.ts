@@ -1,7 +1,7 @@
-import { createCrudRoutes } from "../../../services/crud/createCrudRoutes";
+import { createCrudRoutes } from "@/services/crud/createCrudRoutes";
 
-import { skillsService } from "../../../features/skills/services/skills.service";
-import type { SkillFilters } from "../../../features/skills/types/skills.types";
+import { skillsService } from "@/features/skills/services/skills.service";
+import type { SkillFilters } from "@/features/skills/types/skills.types";
 
 const skillsRoutes = createCrudRoutes({
   service: skillsService,

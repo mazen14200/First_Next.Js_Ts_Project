@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 import {
   getProjects,
   createProject,
-} from "../../../../features/projects/services/projects.service";
+} from "@/features/projects/services/projects.service";
 
-import type { CreateProjectRequest } from "../../../../features/projects/types/project.types";
+import type { CreateProjectRequest } from "@/features/projects/types/project.types";
 import axios from "axios";
 
-import { authErrorResponse } from "../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 export async function GET() {
   try {
     const projects = await getProjects();

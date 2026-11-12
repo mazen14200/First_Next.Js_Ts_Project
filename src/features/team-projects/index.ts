@@ -4,7 +4,7 @@ export {
   getTeamProjectById,
   getTeamProjects,
   updateTeamProject,
-} from "./services/team-project.service";
+} from "@/features/team-projects/services/team-project.service";
 
 export type {
   TeamProject,
@@ -13,4 +13,4 @@ export type {
   CreateTeamProjectRequest,
   UpdateTeamProjectRequest,
   TeamProjectOption
-} from "./types/team-project.types"
+} from "@/features/team-projects/types/team-project.types"

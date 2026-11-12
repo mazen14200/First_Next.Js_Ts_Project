@@ -4,13 +4,13 @@ import { useId, useState } from "react";
 import type { ReactNode } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 
-import { ApiError } from "../../../lib/api/api-error";
+import { ApiError } from "@/lib/api/api-error";
 
 import type {
   FormField,
   FormModalProps,
   FormValues,
-} from "./FormModal.types";
+} from "@/components/shared/FormModal/FormModal.types";
 
 const INPUT_CLASSES =
   "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-[#1470ad] focus:ring-4 focus:ring-[#1470ad]/10 disabled:cursor-not-allowed disabled:bg-slate-50";

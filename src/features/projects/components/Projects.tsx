@@ -13,20 +13,20 @@ import type {
   Project,
   ProjectListItem,
   UpdateProjectRequest,
-} from "../types/project.types";
+} from "@/features/projects/types/project.types";
 
-import type { Status } from "../../status";
+import type { Status } from "@/features/status";
 
-import ProjectsTable from "./ProjectsTable";
-import ProjectsKanban from "./ProjectsKanban";
-import ProjectModal from "./ProjectsModal";
-import ProjectDeleteModal from "./ProjectDeleteModal";
+import ProjectsTable from "@/features/projects/components/ProjectsTable";
+import ProjectsKanban from "@/features/projects/components/ProjectsKanban";
+import ProjectModal from "@/features/projects/components/ProjectsModal";
+import ProjectDeleteModal from "@/features/projects/components/ProjectDeleteModal";
 
-import TableHeader from "../../../components/ui/TableHeader/TableHeader";
-import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
-import DatePicker from "../../../components/ui/DatePicker/DatePicker";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
+import DatePicker from "@/components/ui/DatePicker/DatePicker";
 
-import { apiFetch } from "../../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 type ProjectsView = "table" | "kanban";
 

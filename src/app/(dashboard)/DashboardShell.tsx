@@ -3,9 +3,9 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 
-import Header from "../../components/layout/Header/Header";
-import Sidebar from "../../components/layout/Sidebar/Sidebar";
-import Footer from "../../components/layout/Footer/Footer";
+import Header from "@/components/layout/Header/Header";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import Footer from "@/components/layout/Footer/Footer";
 
 export default function DashboardShell({ children }: { children: ReactNode }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);

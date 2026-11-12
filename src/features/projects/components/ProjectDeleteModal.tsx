@@ -4,7 +4,7 @@ import { DeleteOutlined, CloseOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-import type { ProjectListItem } from "../types/project.types";
+import type { ProjectListItem } from "@/features/projects/types/project.types";
 
 interface ProjectDeleteModalProps {
   open: boolean;

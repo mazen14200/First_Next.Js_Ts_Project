@@ -1,4 +1,4 @@
-import History from "../../../features/history/components/History";
+import History from "@/features/history/components/History";
 
 export default function HistoryPage() {
   return (

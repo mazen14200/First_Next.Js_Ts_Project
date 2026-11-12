@@ -4,12 +4,12 @@ export {
   createDepartment,
   updateDepartment,
   deleteDepartment,
-} from "./services/departments.service";
+} from "@/features/departments/services/departments.service";
 
 export type {
   Department,
   CreateDepartmentRequest,
   UpdateDepartmentRequest,
-} from "./types/department.types";
+} from "@/features/departments/types/department.types";
 
-export { default as DepartmentTable } from "./components/DepartmentTable";
+export { default as DepartmentTable } from "@/features/departments/components/DepartmentTable";

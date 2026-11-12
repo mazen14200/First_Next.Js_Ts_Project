@@ -2,6 +2,6 @@ export type {
   Role,
   CreateRoleRequest,
   UpdateRoleRequest,
-} from "./types/role.types";
+} from "@/features/roles/types/role.types";
 
-export { default as RoleTable } from "./components/RoleTable";
+export { default as RoleTable } from "@/features/roles/components/RoleTable";

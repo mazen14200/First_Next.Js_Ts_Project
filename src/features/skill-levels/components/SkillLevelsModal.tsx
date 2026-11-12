@@ -7,7 +7,7 @@ import type {
   CreateSkillLevelRequest,
   SkillLevel,
   UpdateSkillLevelRequest,
-} from "../types/skill-levels.types";
+} from "@/features/skill-levels/types/skill-levels.types";
 
 interface SkillLevelModalProps {
   open: boolean;

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-import { authBackend } from "../../../../lib/auth/backend";
-import { setAuthCookies } from "../../../../lib/auth/cookies";
-import { normalizeTokens } from "../../../../features/auth/types/auth.types";
+import { authBackend } from "@/lib/auth/backend";
+import { setAuthCookies } from "@/lib/auth/cookies";
+import { normalizeTokens } from "@/features/auth/types/auth.types";
 
 export async function POST(request: Request) {
   try {

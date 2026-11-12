@@ -1,13 +1,13 @@
 import type {
   FormField,
   FormValues,
-} from "../../../components/shared";
+} from "@/components/shared";
 
 import type {
   CreateTeamRequest,
   Team,
   UpdateTeamRequest,
-} from "../types/team.types";
+} from "@/features/teams/types/team.types";
 
 export interface TeamFieldLabels {
   nameAR: string;

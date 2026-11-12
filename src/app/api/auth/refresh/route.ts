@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { AUTH_COOKIE } from "../../../../lib/auth/constants";
-import { setAuthCookies } from "../../../../lib/auth/cookies";
-import { refreshSession } from "../../../../lib/auth/refresh";
-import { authErrorResponse } from "../../../../lib/api/auth-error-response";
+import { AUTH_COOKIE } from "@/lib/auth/constants";
+import { setAuthCookies } from "@/lib/auth/cookies";
+import { refreshSession } from "@/lib/auth/refresh";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 
 export async function POST(request: NextRequest) {
   try {

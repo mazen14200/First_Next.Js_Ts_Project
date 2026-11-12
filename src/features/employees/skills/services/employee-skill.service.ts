@@ -1,4 +1,4 @@
-import serverApi from "../../../../services/server-api";
+import serverApi from "@/services/server-api";
 
 import type {
   EmployeeSkill,
@@ -6,7 +6,7 @@ import type {
   GetEmployeeSkillsParams,
   CreateEmployeeSkillRequest,
   UpdateEmployeeSkillRequest,
-} from "../types/employee-skills.types";
+} from "@/features/employees/skills/types/employee-skills.types";
 
 const EMPLOYEE_SKILLS_ENDPOINT = "/employees";
 

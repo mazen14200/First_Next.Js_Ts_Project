@@ -3,13 +3,13 @@ import { NextResponse } from "next/server";
 import {
   deleteStatus,
   updateStatus,
-} from "../../../../features/status/index";
+} from "@/features/status";
 
 import type {
   UpdateStatusRequest,
-} from "../../../../features/status/index";
+} from "@/features/status";
 
-import { authErrorResponse } from "../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     id: string;

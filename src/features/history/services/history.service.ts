@@ -1,9 +1,9 @@
-import serverApi from "../../../services/server-api";
+import serverApi from "@/services/server-api";
 
 import type {
   HistoryFilters,
   PaginatedHistoryResponse,
-} from "../types/history.types";
+} from "@/features/history/types/history.types";
 
 const HISTORY_ENDPOINT = "/History";
 

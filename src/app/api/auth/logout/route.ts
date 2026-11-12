@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { authBackend } from "../../../../lib/auth/backend";
-import { AUTH_COOKIE } from "../../../../lib/auth/constants";
-import { clearAuthCookies } from "../../../../lib/auth/cookies";
+import { authBackend } from "@/lib/auth/backend";
+import { AUTH_COOKIE } from "@/lib/auth/constants";
+import { clearAuthCookies } from "@/lib/auth/cookies";
 
 export async function POST(request: NextRequest) {
   const accessToken = request.cookies.get(

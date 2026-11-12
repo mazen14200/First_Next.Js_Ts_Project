@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { useTranslations } from "next-intl";
 
-import type { HistoryItem } from "../types/history.types";
+import type { HistoryItem } from "@/features/history/types/history.types";
 
 interface HistoryTableProps {
   history: HistoryItem[];

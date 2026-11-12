@@ -7,7 +7,7 @@ import type {
   CreateRoleRequest,
   Role,
   UpdateRoleRequest,
-} from "../types/role.types";
+} from "@/features/roles/types/role.types";
 
 interface RoleModalProps {
   open: boolean;

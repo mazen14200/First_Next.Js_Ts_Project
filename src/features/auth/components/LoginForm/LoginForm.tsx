@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import styles from './LoginForm.module.css';
+import styles from "@/features/auth/components/LoginForm/LoginForm.module.css";
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { sanitizeReturnTo } from '../../../../lib/auth/return-to';
+import { sanitizeReturnTo } from "@/lib/auth/return-to";
 
 export default function LoginForm() {
 

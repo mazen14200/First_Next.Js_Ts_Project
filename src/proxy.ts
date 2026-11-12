@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { LOGIN_PATH } from "./lib/auth/constants";
-import { sanitizeReturnTo } from "./lib/auth/return-to";
+import { LOGIN_PATH } from "@/lib/auth/constants";
+import { sanitizeReturnTo } from "@/lib/auth/return-to";
 
 const PUBLIC_PATHS = new Set(["/login", "/register"]);
 

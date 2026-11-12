@@ -1,4 +1,4 @@
-export { skillsService } from "./services/skills.service";
+export { skillsService } from "@/features/skills/services/skills.service";
 
 export type {
   CreateSkillRequest,
@@ -6,4 +6,4 @@ export type {
   Skill,
   SkillFilters,
   UpdateSkillRequest,
-} from "./types/skills.types";
+} from "@/features/skills/types/skills.types";

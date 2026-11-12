@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { updateDepartment, deleteDepartment } from "../../../../features/departments/index";
+import { updateDepartment, deleteDepartment } from "@/features/departments";
 
-import { authErrorResponse } from "../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     id: string;

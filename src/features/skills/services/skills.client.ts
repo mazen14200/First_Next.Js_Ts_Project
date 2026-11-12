@@ -2,16 +2,16 @@ import {
   createCrudClient,
   defaultToSearchParams,
   parseError,
-} from "../../../services/crud/createCrudClient";
+} from "@/services/crud/createCrudClient";
 
 import type {
   CreateSkillRequest,
   Skill,
   SkillFilters,
   UpdateSkillRequest,
-} from "../types/skills.types";
+} from "@/features/skills/types/skills.types";
 
-import { apiFetch } from "../../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 const base = createCrudClient<
   Skill,

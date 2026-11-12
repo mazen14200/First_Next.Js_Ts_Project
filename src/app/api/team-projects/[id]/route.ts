@@ -4,9 +4,9 @@ import {
   deleteTeamProject,
   getTeamProjectById,
   updateTeamProject,
-} from "../../../../features/team-projects";
+} from "@/features/team-projects";
 
-import { authErrorResponse } from "../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     id: string;

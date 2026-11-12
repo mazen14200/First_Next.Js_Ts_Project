@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 
 import {
   getHistory,
-} from "../../../features/history";
+} from "@/features/history";
 
-import { authErrorResponse } from "../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);

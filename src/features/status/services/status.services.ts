@@ -1,10 +1,10 @@
-import serverApi from "../../../services/server-api";
+import serverApi from "@/services/server-api";
 
 import type {
   Status,
   CreateStatusRequest,
   UpdateStatusRequest,
-} from "../types/status.types";
+} from "@/features/status/types/status.types";
 
 const STATUS_ENDPOINT = "/Status";
 

@@ -1,12 +1,12 @@
-export { default as DataTable } from "./DataTable/DataTable";
+export { default as DataTable } from "@/components/shared/DataTable/DataTable";
 export type {
   DataTableColumn,
   DataTableLabels,
   DataTablePagination,
   DataTableProps,
-} from "./DataTable/DataTable.types";
+} from "@/components/shared/DataTable/DataTable.types";
 
-export { default as FormModal } from "./FormModal/FormModal";
+export { default as FormModal } from "@/components/shared/FormModal/FormModal";
 export type {
   CustomField,
   FormField,
@@ -17,6 +17,6 @@ export type {
   SelectField,
   TextareaField,
   TextField,
-} from "./FormModal/FormModal.types";
+} from "@/components/shared/FormModal/FormModal.types";
 
-export { default as ConfirmModal } from "./ConfirmModal/ConfirmModal";
+export { default as ConfirmModal } from "@/components/shared/ConfirmModal/ConfirmModal";

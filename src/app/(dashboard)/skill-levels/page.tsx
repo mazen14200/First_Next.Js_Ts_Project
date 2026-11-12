@@ -1,4 +1,4 @@
-import SkillLevelsTable from "../../../features/skill-levels/components/SkillLevelsTable";
+import SkillLevelsTable from "@/features/skill-levels/components/SkillLevelsTable";
 
 export default function SkillLevelsPage() {
   return (

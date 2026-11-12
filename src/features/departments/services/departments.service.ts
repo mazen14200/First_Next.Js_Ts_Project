@@ -1,11 +1,11 @@
-import api from "../../../services/server-api";
+import api from "@/services/server-api";
 
 import type {
   Department,
   PaginatedDepartmentsResponse,
   CreateDepartmentRequest,
   UpdateDepartmentRequest,
-} from "../types/department.types";
+} from "@/features/departments/types/department.types";
 
 export const getDepartments = async (
   pageNumber: number = 1,

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
-import { getNewProjectCode } from "../../../../features/projects";
+import { getNewProjectCode } from "@/features/projects";
 
-import { authErrorResponse } from "../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 export async function GET() {
   try {
     const data = await getNewProjectCode();

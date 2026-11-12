@@ -1,11 +1,11 @@
 import type { AxiosInstance } from "axios";
 
-import serverApi from "../server-api";
+import serverApi from "@/services/server-api";
 
 import type {
   ListParams,
   PagedResult,
-} from "../../types/crud.types";
+} from "@/types/crud.types";
 
 export function defaultToQuery(
   params: ListParams

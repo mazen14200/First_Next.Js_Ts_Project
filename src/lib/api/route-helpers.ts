@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-import type { ApiErrorBody } from "../../types/crud.types";
+import type { ApiErrorBody } from "@/types/crud.types";
 
 export function parseId(id: string): number | null {
   const parsed = Number(id);

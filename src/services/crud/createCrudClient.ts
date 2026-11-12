@@ -1,12 +1,12 @@
-import { ApiError } from "../../lib/api/api-error";
+import { ApiError } from "@/lib/api/api-error";
 
 import type {
   ApiErrorBody,
   ListParams,
   PagedResult,
-} from "../../types/crud.types";
+} from "@/types/crud.types";
 
-import { apiFetch } from "../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 export function defaultToSearchParams(
   params: ListParams

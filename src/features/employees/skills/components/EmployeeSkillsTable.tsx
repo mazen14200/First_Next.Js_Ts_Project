@@ -12,16 +12,16 @@ import type {
   PaginatedEmployeeSkillsResponse,
   CreateEmployeeSkillRequest,
   UpdateEmployeeSkillRequest,
-} from "../types/employee-skills.types";
+} from "@/features/employees/skills/types/employee-skills.types";
 
-import EmployeeSkillsModal from "./EmployeeSkillsModal";
-import DeleteEmployeeSkillModal from "./DeleteEmployeeSkillModal";
+import EmployeeSkillsModal from "@/features/employees/skills/components/EmployeeSkillsModal";
+import DeleteEmployeeSkillModal from "@/features/employees/skills/components/DeleteEmployeeSkillModal";
 
-import TableHeader from "../../../../components/ui/TableHeader/TableHeader";
-import TablePagination from "../../../../components/ui/TablePagination/TablePagination";
-import FilterSelect from "../../../../components/ui/FilterSelect/FilterSelect";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
 
-import { apiFetch } from "../../../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 interface EmployeeSkillsTableProps {
   employeeId: string;

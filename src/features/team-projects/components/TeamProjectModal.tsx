@@ -4,14 +4,14 @@ import { useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import { useLocale, useTranslations } from "next-intl";
 
-import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
 
 import type {
   CreateTeamProjectRequest,
   TeamProject,
   TeamProjectOption,
   UpdateTeamProjectRequest,
-} from "../types/team-project.types";
+} from "@/features/team-projects/types/team-project.types";
 
 interface TeamProjectModalProps {
   open: boolean;

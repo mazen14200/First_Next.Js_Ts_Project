@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
 
-import { clearAuthCookies } from "../auth/cookies";
+import { clearAuthCookies } from "@/lib/auth/cookies";
 import {
   AuthUnavailableError,
   SessionExpiredError,
-} from "../auth/errors";
+} from "@/lib/auth/errors";
 
 export function authErrorResponse(
   error: unknown

@@ -5,9 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import type {
   ListParams,
   PagedResult,
-} from "../types/crud.types";
+} from "@/types/crud.types";
 
-import type { CrudClient } from "../services/crud/createCrudClient";
+import type { CrudClient } from "@/services/crud/createCrudClient";
 
 export type CrudErrorAction =
   | "load"

@@ -7,21 +7,21 @@ import {
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import TableHeader from "../../../components/ui/TableHeader/TableHeader";
-import TablePagination from "../../../components/ui/TablePagination/TablePagination";
-import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
-import DatePicker from "../../../components/ui/DatePicker/DatePicker";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
+import DatePicker from "@/components/ui/DatePicker/DatePicker";
 
-import HistoryTimeline from "./HistoryTimeline";
-import HistoryTable from "./HistoryTable";
+import HistoryTimeline from "@/features/history/components/HistoryTimeline";
+import HistoryTable from "@/features/history/components/HistoryTable";
 
 import type {
   HistoryFilters,
   HistoryItem,
   PaginatedHistoryResponse,
-} from "../types/history.types";
+} from "@/features/history/types/history.types";
 
-import { apiFetch } from "../../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 interface HistoryTimelineProps {
   users?: {

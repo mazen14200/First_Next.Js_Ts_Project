@@ -8,11 +8,11 @@ import {
 } from "@ant-design/icons";
 import { useLocale, useTranslations } from "next-intl";
 
-import TablePagination from "../../../components/ui/TablePagination/TablePagination";
-import styles from "./ProjectsKanban.module.css";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
+import styles from "@/features/projects/components/ProjectsKanban.module.css";
 
-import type { Status } from "../../status";
-import type { ProjectListItem } from "../types/project.types";
+import type { Status } from "@/features/status";
+import type { ProjectListItem } from "@/features/projects/types/project.types";
 
 interface ProjectsKanbanProps {
   projects: ProjectListItem[];

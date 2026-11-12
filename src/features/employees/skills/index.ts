@@ -3,7 +3,7 @@ export {
   createEmployeeSkill,
   updateEmployeeSkill,
   deleteEmployeeSkill,
-} from "./services/employee-skill.service";
+} from "@/features/employees/skills/services/employee-skill.service";
 
 export type {
   EmployeeSkill,
@@ -11,4 +11,4 @@ export type {
   GetEmployeeSkillsParams,
   CreateEmployeeSkillRequest,
   UpdateEmployeeSkillRequest,
-} from "./types/employee-skills.types";
+} from "@/features/employees/skills/types/employee-skills.types";

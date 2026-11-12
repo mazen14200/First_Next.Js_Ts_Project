@@ -1,4 +1,4 @@
-import { DepartmentTable } from "../../../features/departments/index";
+import { DepartmentTable } from "@/features/departments";
 
 export default function DepartmentsPage() {
   return (

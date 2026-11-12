@@ -1,13 +1,13 @@
 import type {
   FormField,
   FormValues,
-} from "../../../components/shared";
+} from "@/components/shared";
 
 import type {
   CreateSkillRequest,
   Skill,
   UpdateSkillRequest,
-} from "../types/skills.types";
+} from "@/features/skills/types/skills.types";
 
 export interface SkillFieldLabels {
   arabicName: string;

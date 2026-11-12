@@ -1,4 +1,4 @@
-import TeamProjectTable from "../../../features/team-projects/components/TeamProjectTable";
+import TeamProjectTable from "@/features/team-projects/components/TeamProjectTable";
 
 export default function TeamProjectsPage() {
   return (

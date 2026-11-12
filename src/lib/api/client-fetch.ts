@@ -1,9 +1,9 @@
-import { LOGIN_PATH } from "../auth/constants";
-import { sanitizeReturnTo } from "../auth/return-to";
+import { LOGIN_PATH } from "@/lib/auth/constants";
+import { sanitizeReturnTo } from "@/lib/auth/return-to";
 
-import { SessionExpiredError } from "../auth/errors";
+import { SessionExpiredError } from "@/lib/auth/errors";
 
-import { clearClientSession } from "../../features/auth/utils/session";
+import { clearClientSession } from "@/features/auth/utils/session";
 
 let redirecting = false;
 

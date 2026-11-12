@@ -14,8 +14,8 @@ import {
 } from "@ant-design/icons";
 import Link from "next/link";
 
-import FilterSelect from "../FilterSelect/FilterSelect";
-import styles from "./TableHeader.module.css";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
+import styles from "@/components/ui/TableHeader/TableHeader.module.css";
 
 interface TableHeaderProps {
   title: string;

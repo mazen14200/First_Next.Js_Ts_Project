@@ -7,12 +7,12 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 
-import TablePagination from "../../ui/TablePagination/TablePagination";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
 
 import type {
   DataTableColumn,
   DataTableProps,
-} from "./DataTable.types";
+} from "@/components/shared/DataTable/DataTable.types";
 
 const PILL_CLASSES =
   "inline-flex rounded-lg px-2.5 py-1.5 text-sm font-semibold text-slate-700 transition-all duration-200 group-hover:bg-[#1470ad] group-hover:text-white";

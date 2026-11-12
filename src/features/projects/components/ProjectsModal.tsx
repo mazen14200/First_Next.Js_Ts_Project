@@ -5,15 +5,15 @@ import { Input, Select } from "antd";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-import DatePicker from "../../../components/ui/DatePicker/DatePicker";
+import DatePicker from "@/components/ui/DatePicker/DatePicker";
 
 import type {
   CreateProjectRequest,
   Project,
   UpdateProjectRequest,
-} from "../types/project.types";
+} from "@/features/projects/types/project.types";
 
-import type { Status } from "../../status";
+import type { Status } from "@/features/status";
 
 interface ProjectModalProps {
   open: boolean;

@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { skillsService } from "../../../../../features/skills/services/skills.service";
+import { skillsService } from "@/features/skills/services/skills.service";
 
 import {
   invalidIdResponse,
   parseId,
   toErrorResponse,
-} from "../../../../../lib/api/route-helpers";
+} from "@/lib/api/route-helpers";
 
-import { authErrorResponse } from "../../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 interface RouteContext {
   params: Promise<{
     id: string;

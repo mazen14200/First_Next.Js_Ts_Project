@@ -1,4 +1,4 @@
-export { teamsService } from "./services/teams.service";
+export { teamsService } from "@/features/teams/services/teams.service";
 
 export type {
   CreateTeamRequest,
@@ -6,4 +6,4 @@ export type {
   PaginatedTeamsResponse,
   Team,
   UpdateTeamRequest,
-} from "./types/team.types";
+} from "@/features/teams/types/team.types";

@@ -1,14 +1,14 @@
 import axios from "axios";
 
-import { authBackend } from "./backend";
+import { authBackend } from "@/lib/auth/backend";
 import {
   AuthUnavailableError,
   SessionExpiredError,
-} from "./errors";
+} from "@/lib/auth/errors";
 
-import { normalizeTokens } from "../../features/auth/types/auth.types";
+import { normalizeTokens } from "@/features/auth/types/auth.types";
 
-import type { AuthTokens } from "../../features/auth/types/auth.types";
+import type { AuthTokens } from "@/features/auth/types/auth.types";
 
 const REFRESH_CACHE_TTL_MS = 10_000;
 

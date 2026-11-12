@@ -10,16 +10,16 @@ import {
 import type {
   TeamProject,
   TeamProjectOption,
-} from "../types/team-project.types";
+} from "@/features/team-projects/types/team-project.types";
 
-import TeamProjectModal from "./TeamProjectModal";
-import DeleteTeamProjectModal from "./DeleteTeamProjectModal";
+import TeamProjectModal from "@/features/team-projects/components/TeamProjectModal";
+import DeleteTeamProjectModal from "@/features/team-projects/components/DeleteTeamProjectModal";
 
-import TableHeader from "../../../components/ui/TableHeader/TableHeader";
-import TablePagination from "../../../components/ui/TablePagination/TablePagination";
-import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
 
-import { apiFetch } from "../../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 const TeamProjectTable = () => {
   const locale = useLocale();

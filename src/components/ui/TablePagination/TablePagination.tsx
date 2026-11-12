@@ -3,7 +3,7 @@
 import { Pagination } from "antd";
 import { useLocale } from "next-intl";
 
-import styles from "./TablePagination.module.css";
+import styles from "@/components/ui/TablePagination/TablePagination.module.css";
 
 interface TablePaginationProps {
   currentPage: number;

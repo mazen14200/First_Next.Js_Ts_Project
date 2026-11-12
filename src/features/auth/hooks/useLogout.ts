@@ -1,6 +1,6 @@
 "use client";
 
-import { clearClientSession } from "../utils/session";
+import { clearClientSession } from "@/features/auth/utils/session";
 
 export function useLogout(): () => Promise<void> {
   return async () => {

@@ -11,16 +11,16 @@ import type {
   SkillLevel,
   CreateSkillLevelRequest,
   UpdateSkillLevelRequest,
-} from "../types/skill-levels.types";
+} from "@/features/skill-levels/types/skill-levels.types";
 
-import SkillLevelModal from "./SkillLevelsModal";
-import DeleteSkillLevelModal from "./DeleteSkillLevelsModal";
+import SkillLevelModal from "@/features/skill-levels/components/SkillLevelsModal";
+import DeleteSkillLevelModal from "@/features/skill-levels/components/DeleteSkillLevelsModal";
 
-import TableHeader from "../../../components/ui/TableHeader/TableHeader";
-import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
-import TablePagination from "../../../components/ui/TablePagination/TablePagination";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
 
-import { apiFetch } from "../../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 const SkillLevelsTable = () => {
   const locale = useLocale();

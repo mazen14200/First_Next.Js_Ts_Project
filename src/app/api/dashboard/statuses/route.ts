@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getStatuses } from "../../../../features/status/services/status.services";
+import { getStatuses } from "@/features/status/services/status.services";
 
-import { authErrorResponse } from "../../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 export async function GET() {
   try {
     const statuses = await getStatuses();

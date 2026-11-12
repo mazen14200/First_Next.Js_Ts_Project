@@ -8,7 +8,7 @@ import type {
   EmployeeSkill,
   CreateEmployeeSkillRequest,
   UpdateEmployeeSkillRequest,
-} from "../index";
+} from "@/features/employees/skills";
 
 interface SkillOption {
   id: number;

@@ -1,10 +1,10 @@
-import serverApi from "../../../services/server-api";
+import serverApi from "@/services/server-api";
 
 import type {
   SkillLevel,
   CreateSkillLevelRequest,
   UpdateSkillLevelRequest,
-} from "../types/skill-levels.types";
+} from "@/features/skill-levels/types/skill-levels.types";
 
 const SKILL_LEVELS_ENDPOINT = "/skill-levels";
 

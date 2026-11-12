@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import type { ListParams } from "../../types/crud.types";
+import type { ListParams } from "@/types/crud.types";
 
-import { authErrorResponse } from "../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 import {
   invalidIdResponse,
   invalidPaginationResponse,
   parseId,
   parsePagination,
   toErrorResponse,
-} from "../../lib/api/route-helpers";
+} from "@/lib/api/route-helpers";
 
-import type { CrudService } from "./createCrudService";
+import type { CrudService } from "@/services/crud/createCrudService";
 
 interface RouteContext {
   params: Promise<{ id: string }>;

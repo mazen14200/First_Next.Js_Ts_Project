@@ -12,15 +12,15 @@ import type {
   PaginatedDepartmentsResponse,
   CreateDepartmentRequest,
   UpdateDepartmentRequest,
-} from "../types/department.types";
+} from "@/features/departments/types/department.types";
 
-import DepartmentModal from "./DepartmentModal";
-import DeleteDepartmentModal from "./DeleteDepartmentModal";
+import DepartmentModal from "@/features/departments/components/DepartmentModal";
+import DeleteDepartmentModal from "@/features/departments/components/DeleteDepartmentModal";
 
-import TableHeader from "../../../components/ui/TableHeader/TableHeader";
-import TablePagination from "../../../components/ui/TablePagination/TablePagination";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
 
-import { apiFetch } from "../../../lib/api/client-fetch";
+import { apiFetch } from "@/lib/api/client-fetch";
 
 const DepartmentTable = () => {
   const locale = useLocale();

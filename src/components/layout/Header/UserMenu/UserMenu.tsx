@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./UserMenu.module.css";
+import styles from "@/components/layout/Header/UserMenu/UserMenu.module.css";
 
 import {
   SettingOutlined,
@@ -14,7 +14,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 
-import { useLogout } from "../../../../features/auth/hooks/useLogout";
+import { useLogout } from "@/features/auth/hooks/useLogout";
 
 export default function UserMenu() {
   const router = useRouter();

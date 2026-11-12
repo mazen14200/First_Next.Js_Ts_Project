@@ -1,10 +1,10 @@
-import { createCrudClient } from "../../../services/crud/createCrudClient";
+import { createCrudClient } from "@/services/crud/createCrudClient";
 
 import type {
   CreateTeamRequest,
   Team,
   UpdateTeamRequest,
-} from "../types/team.types";
+} from "@/features/teams/types/team.types";
 
 export const teamsClient = createCrudClient<
   Team,

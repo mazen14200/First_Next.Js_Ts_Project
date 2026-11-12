@@ -11,14 +11,14 @@ import type {
   Role,
   CreateRoleRequest,
   UpdateRoleRequest,
-} from "../types/role.types";
+} from "@/features/roles/types/role.types";
 
-import RoleModal from "./RoleModal";
-import DeleteRoleModal from "./DeleteRoleModal";
+import RoleModal from "@/features/roles/components/RoleModal";
+import DeleteRoleModal from "@/features/roles/components/DeleteRoleModal";
 
-import TableHeader from "../../../components/ui/TableHeader/TableHeader";
-import TablePagination from "../../../components/ui/TablePagination/TablePagination";
-import FilterSelect from "../../../components/ui/FilterSelect/FilterSelect";
+import TableHeader from "@/components/ui/TableHeader/TableHeader";
+import TablePagination from "@/components/ui/TablePagination/TablePagination";
+import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
 
 const RoleTable = () => {
   const locale = useLocale();

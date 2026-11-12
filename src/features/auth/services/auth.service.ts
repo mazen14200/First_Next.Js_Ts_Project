@@ -1,4 +1,4 @@
-import api from "../../../services/server-api";
+import api from "@/services/server-api";
 
 interface LoginRequest {
   email: string;

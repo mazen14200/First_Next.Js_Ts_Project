@@ -1,4 +1,4 @@
-import api from "../../../services/server-api";
+import api from "@/services/server-api";
 
 import type {
   CreateTeamProjectRequest,
@@ -6,7 +6,7 @@ import type {
   PaginatedTeamProjectsResponse,
   TeamProject,
   UpdateTeamProjectRequest,
-} from "../types/team-project.types";
+} from "@/features/team-projects/types/team-project.types";
 
 export const getTeamProjects = async ({
   teamId,

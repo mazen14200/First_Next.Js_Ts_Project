@@ -1,13 +1,13 @@
 import axios from "axios";
 import { cookies } from "next/headers";
 
-import { AUTH_COOKIE } from "../lib/auth/constants";
-import { setAuthCookies } from "../lib/auth/cookies";
+import { AUTH_COOKIE } from "@/lib/auth/constants";
+import { setAuthCookies } from "@/lib/auth/cookies";
 import {
   AuthUnavailableError,
   SessionExpiredError,
-} from "../lib/auth/errors";
-import { refreshSession } from "../lib/auth/refresh";
+} from "@/lib/auth/errors";
+import { refreshSession } from "@/lib/auth/refresh";
 
 const serverApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,

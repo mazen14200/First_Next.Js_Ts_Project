@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   createTeamProject,
   getTeamProjects,
-} from "../../../features/team-projects";
+} from "@/features/team-projects";
 
-import { authErrorResponse } from "../../../lib/api/auth-error-response";
+import { authErrorResponse } from "@/lib/api/auth-error-response";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);

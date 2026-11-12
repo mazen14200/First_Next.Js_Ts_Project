@@ -1,15 +1,15 @@
-import serverApi from "../../../services/server-api";
+import serverApi from "@/services/server-api";
 import {
   createCrudService,
   defaultToQuery,
-} from "../../../services/crud/createCrudService";
+} from "@/services/crud/createCrudService";
 
 import type {
   CreateSkillRequest,
   Skill,
   SkillFilters,
   UpdateSkillRequest,
-} from "../types/skills.types";
+} from "@/features/skills/types/skills.types";
 
 const base = createCrudService<
   Skill,

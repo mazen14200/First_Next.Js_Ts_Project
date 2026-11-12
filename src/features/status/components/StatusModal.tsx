@@ -8,7 +8,7 @@ import type {
   CreateStatusRequest,
   Status,
   UpdateStatusRequest,
-} from "../types/status.types";
+} from "@/features/status/types/status.types";
 
 interface StatusModalProps {
   open: boolean;
