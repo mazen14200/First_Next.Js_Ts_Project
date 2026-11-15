@@ -4,8 +4,12 @@ import {
   AppstoreOutlined,
   BarsOutlined,
 } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+
+import SectionLoader from "@/components/shared/feedback/SectionLoader";
+import TableSkeleton from "@/components/shared/feedback/TableSkeleton";
 
 import type {
   CreateProjectRequest,
@@ -18,7 +22,14 @@ import type {
 import type { Status } from "@/features/status";
 
 import ProjectsTable from "@/features/projects/components/ProjectsTable";
-import ProjectsKanban from "@/features/projects/components/ProjectsKanban";
+
+const ProjectsKanban = dynamic(
+  () => import("@/features/projects/components/ProjectsKanban"),
+  {
+    loading: () => <SectionLoader variant="spinner" />,
+  }
+);
+
 import ProjectModal from "@/features/projects/components/ProjectsModal";
 import ProjectDeleteModal from "@/features/projects/components/ProjectDeleteModal";
 
@@ -50,8 +61,13 @@ const Projects = () => {
   const [loading, setLoading] =
     useState(true);
 
+  const [refreshing, setRefreshing] =
+    useState(false);
+
   const [statusesLoading, setStatusesLoading] =
     useState(true);
+
+  const requestSeqRef = useRef(0);
 
   /*
    * Project Modal
@@ -125,6 +141,15 @@ const Projects = () => {
     selectedStartDateFrom?: string,
     selectedStartDateTo?: string
   ) => {
+    const requestId = ++requestSeqRef.current;
+    const isInitialLoad = paginatedResponse === null;
+
+    if (isInitialLoad) {
+      setLoading(true);
+    } else {
+      setRefreshing(true);
+    }
+
     const params = new URLSearchParams({
       PageNumber: String(page),
       PageSize: String(size),
@@ -167,22 +192,31 @@ const Projects = () => {
       );
     }
 
-    const response = await apiFetch(
-      `/api/projects?${params.toString()}`
-    );
-
-    if (!response.ok) {
-      throw new Error(
-        "Failed to fetch projects"
+    try {
+      const response = await apiFetch(
+        `/api/projects?${params.toString()}`
       );
+
+      if (!response.ok) {
+        throw new Error(
+          "Failed to fetch projects"
+        );
+      }
+
+      const data: PaginatedProjectsResponse =
+        await response.json();
+
+      if (requestId === requestSeqRef.current) {
+        setPaginatedResponse(data);
+      }
+
+      return data;
+    } finally {
+      if (requestId === requestSeqRef.current) {
+        setLoading(false);
+        setRefreshing(false);
+      }
     }
-
-    const data: PaginatedProjectsResponse =
-      await response.json();
-
-    setPaginatedResponse(data);
-
-    return data;
   };
 
   /*
@@ -219,8 +253,6 @@ const Projects = () => {
   useEffect(() => {
     const loadProjects = async () => {
       try {
-        setLoading(true);
-
         await fetchProjects(
           1,
           DEFAULT_PAGE_SIZE,
@@ -235,8 +267,6 @@ const Projects = () => {
           "Failed to fetch projects:",
           error
         );
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -272,7 +302,6 @@ const Projects = () => {
     page: number
   ) => {
     try {
-      setLoading(true);
       setCurrentPage(page);
 
       await fetchProjects(
@@ -289,8 +318,6 @@ const Projects = () => {
         "Failed to change projects page:",
         error
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -301,8 +328,6 @@ const Projects = () => {
     size: number
   ) => {
     try {
-      setLoading(true);
-
       setPageSize(size);
       setCurrentPage(1);
 
@@ -320,8 +345,6 @@ const Projects = () => {
         "Failed to change project page size:",
         error
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -335,8 +358,6 @@ const Projects = () => {
       search.trim();
 
     try {
-      setLoading(true);
-
       setAppliedSearch(
         trimmedSearch
       );
@@ -357,8 +378,6 @@ const Projects = () => {
         "Failed to apply project filters:",
         error
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -367,8 +386,6 @@ const Projects = () => {
    */
   const handleResetFilters = async () => {
     try {
-      setLoading(true);
-
       setAppliedSearch("");
       setManagerId("");
       setStatusId(undefined);
@@ -390,8 +407,6 @@ const Projects = () => {
         "Failed to reset project filters:",
         error
       );
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -627,42 +642,8 @@ const Projects = () => {
     paginatedResponse?.pageNumber ??
     currentPage;
 
-  /*
-   * Loading State
-   */
-  if (loading || statusesLoading) {
-    return (
-      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgba(15,23,42,0.04)]">
-        <div className="animate-pulse">
-          <div className="border-b border-slate-100 px-6 py-6">
-            <div className="h-6 w-40 rounded-lg bg-slate-100" />
-            <div className="mt-3 h-4 w-64 rounded-lg bg-slate-100" />
-          </div>
-
-          <div className="space-y-0">
-            {[1, 2, 3].map((item) => (
-              <div
-                key={item}
-                className="flex items-center gap-4 border-b border-slate-100 px-6 py-5 last:border-b-0"
-              >
-                <div className="h-10 w-10 rounded-xl bg-slate-100" />
-
-                <div className="flex-1">
-                  <div className="h-4 w-48 rounded bg-slate-100" />
-                  <div className="mt-2 h-3 w-20 rounded bg-slate-100" />
-                </div>
-
-                <div className="flex gap-2">
-                  <div className="h-9 w-9 rounded-lg bg-slate-100" />
-                  <div className="h-9 w-9 rounded-lg bg-slate-100" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const showInitialSkeleton =
+    loading && paginatedResponse === null;
 
   return (
     <div className="space-y-5">
@@ -736,6 +717,7 @@ const Projects = () => {
                 );
               }}
               allowClear
+              loading={statusesLoading}
             />
 
             <DatePicker
@@ -803,12 +785,17 @@ const Projects = () => {
       {/* =========================
           Content
       ========================== */}
-      {view === "table" ? (
+      {showInitialSkeleton ? (
+        <section className="overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-lg">
+          <TableSkeleton columns={7} rows={5} />
+        </section>
+      ) : view === "table" ? (
         <ProjectsTable
           projects={projects}
           currentPage={safeCurrentPage}
           pageSize={pageSize}
           totalCount={totalCount}
+          refreshing={refreshing}
           onPageChange={
             handlePageChange
           }

@@ -27,7 +27,6 @@ export function teamFields(
       name: "nameAR",
       label: labels.nameAR,
       placeholder: labels.nameARPlaceholder,
-      required: true,
       dir: "rtl",
     },
     {
@@ -35,14 +34,12 @@ export function teamFields(
       name: "nameEN",
       label: labels.nameEN,
       placeholder: labels.nameENPlaceholder,
-      required: true,
     },
     {
       type: "number",
       name: "rate",
       label: labels.rate,
       placeholder: labels.ratePlaceholder,
-      required: true,
       min: 0,
       step: "any",
     },

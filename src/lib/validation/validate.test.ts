@@ -261,3 +261,87 @@ describe("skillSchema", () => {
     expect(result.fieldErrors.nameEn).toContain("REQUIRED");
   });
 });
+
+describe("edge cases", () => {
+  it("skips rules for optional empty values", () => {
+    const schema: ValidationSchema = {
+      note: {
+        rules: [
+          { kind: "type", type: "string" },
+          { kind: "maxLength", value: 3 },
+        ],
+      },
+    };
+    expect(validate({ note: "" }, schema).valid).toBe(true);
+    expect(
+      validate({ note: "abcd" }, schema).fieldErrors.note
+    ).toContain("MAX_LENGTH");
+  });
+
+  it("accepts null for nullable fields", () => {
+    const schema: ValidationSchema = {
+      desc: {
+        rules: [
+          { kind: "nullable" },
+          { kind: "type", type: "string" },
+        ],
+      },
+    };
+    expect(validate({ desc: null }, schema).valid).toBe(true);
+  });
+
+  it("supports custom rules", () => {
+    const schema: ValidationSchema = {
+      code: {
+        rules: [
+          {
+            kind: "custom",
+            validate: (v) =>
+              v === "ok" ? undefined : "NOT_ALLOWED",
+          },
+        ],
+      },
+    };
+    expect(validate({ code: "ok" }, schema).valid).toBe(true);
+    expect(
+      validate({ code: "bad" }, schema).fieldErrors.code
+    ).toContain("NOT_ALLOWED");
+  });
+
+  it("enforces min, max and step", () => {
+    const schema: ValidationSchema = {
+      n: {
+        rules: [
+          { kind: "type", type: "number" },
+          { kind: "min", value: 0 },
+          { kind: "max", value: 10 },
+          { kind: "step", value: 0.5 },
+        ],
+      },
+    };
+    expect(validate({ n: "5.5" }, schema).valid).toBe(true);
+    expect(
+      validate({ n: "-1" }, schema).fieldErrors.n
+    ).toContain("MIN_VALUE");
+    expect(
+      validate({ n: "11" }, schema).fieldErrors.n
+    ).toContain("MAX_VALUE");
+    expect(
+      validate({ n: "5.3" }, schema).fieldErrors.n
+    ).toContain("STEP_MISMATCH");
+  });
+
+  it("throws on invalid rule configuration", () => {
+    const badStep: ValidationSchema = {
+      n: { rules: [{ kind: "step", value: -1 }] },
+    };
+    expect(() => validate({ n: 1 }, badStep)).toThrow(/step/);
+
+    const badLength: ValidationSchema = {
+      s: { rules: [{ kind: "maxLength", value: -2 }] },
+    };
+    expect(() => validate({ s: "x" }, badLength)).toThrow(
+      /length/
+    );
+  });
+});

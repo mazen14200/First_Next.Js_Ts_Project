@@ -4,17 +4,29 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import { Spin } from "antd";
 import { useLocale, useTranslations } from "next-intl";
 
 import TablePagination from "@/components/ui/TablePagination/TablePagination";
+import { displayValue } from "@/utils/display-value";
 
 import type { ProjectListItem } from "@/features/projects/types/project.types";
+
+const COLUMN_WIDTHS = [
+  "22%",
+  "13%",
+  "13%",
+  "12%",
+  "12%",
+  "13%",
+];
 
 interface ProjectsTableProps {
   projects: ProjectListItem[];
   currentPage: number;
   pageSize: number;
   totalCount: number;
+  refreshing?: boolean;
   onPageChange: (page: number) => void;
   onPageSizeChange: (pageSize: number) => void;
   onEdit: (project: ProjectListItem) => void;
@@ -26,6 +38,7 @@ const ProjectsTable = ({
   currentPage,
   pageSize,
   totalCount,
+  refreshing = false,
   onPageChange,
   onPageSizeChange,
   onEdit,
@@ -57,9 +70,22 @@ const ProjectsTable = ({
 
   return (
     <>
-      <section className="overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-lg">
+      <section className="relative overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-lg">
+        {refreshing && (
+          <div className="pointer-events-none absolute inset-0 z-10 flex items-start justify-center bg-white/40 pt-16">
+            <Spin />
+          </div>
+        )}
+
         <div className="overflow-x-auto">
           <table className="w-full min-w-[1000px] border-collapse text-center">
+            <colgroup>
+              {COLUMN_WIDTHS.map((width, i) => (
+                <col key={i} style={{ width }} />
+              ))}
+              <col />
+            </colgroup>
+
             <thead>
               <tr className="bg-[#1470ad]">
                 <th className="border-b border-e border-white/20 px-6 py-4 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
@@ -86,7 +112,7 @@ const ProjectsTable = ({
                   {t("toDate")}
                 </th>
 
-                <th className="w-40 border-b border-white/20 px-6 py-4 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
+                <th className="border-b border-white/20 px-6 py-4 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
                   {t("actions")}
                 </th>
               </tr>
@@ -104,25 +130,25 @@ const ProjectsTable = ({
                   >
                     <td className="border-e border-slate-200 px-6 py-5">
                       <span className="inline-flex rounded-lg px-2.5 py-1.5 text-sm font-semibold text-slate-700 transition-all duration-200 group-hover:bg-[#1470ad] group-hover:text-white">
-                        {projectName || "—"}
+                        {displayValue(projectName)}
                       </span>
                     </td>
 
                     <td className="border-e border-slate-200 px-6 py-5">
                       <span className="inline-flex rounded-lg px-2.5 py-1.5 text-sm font-medium text-slate-700 transition-all duration-200 group-hover:bg-[#1470ad] group-hover:text-white">
-                        {project.serialCode || "—"}
+                        {displayValue(project.serialCode)}
                       </span>
                     </td>
 
                     <td className="border-e border-slate-200 px-6 py-5">
                       <span className="inline-flex rounded-lg px-2.5 py-1.5 text-sm text-slate-700 transition-all duration-200 group-hover:bg-[#1470ad] group-hover:text-white">
-                        {project.managerName || "—"}
+                        {displayValue(project.managerName)}
                       </span>
                     </td>
 
                     <td className="border-e border-slate-200 px-6 py-5">
                       <span className="inline-flex rounded-full bg-[#1470ad]/10 px-3 py-1 text-xs font-semibold text-[#1470ad]">
-                        {project.statusName || "—"}
+                        {displayValue(project.statusName)}
                       </span>
                     </td>
 

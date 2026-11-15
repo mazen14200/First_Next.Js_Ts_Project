@@ -5,6 +5,12 @@ export interface DataTableColumn<T> {
   header: ReactNode;
   accessor?: keyof T;
   cell?: (row: T, index: number) => ReactNode;
+  /**
+   * Percentage width for this column (e.g. "55%" or "25%").
+   * Explicit widths must sum to less than 100% so the last
+   * column (usually Actions) takes the remaining space.
+   * Columns without a width size naturally to their header.
+   */
   width?: string;
   align?: "start" | "center" | "end";
   pill?: boolean;

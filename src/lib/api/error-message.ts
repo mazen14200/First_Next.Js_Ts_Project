@@ -28,6 +28,7 @@ const CODE_TO_KEY: Record<string, ErrorMessageKey> = {
   INVALID_ID: "invalidRequest",
   INVALID_QUERY: "invalidRequest",
   INVALID_PAGINATION: "invalidRequest",
+  INVALID_REQUEST: "invalidRequest",
   NOT_FOUND: "notFound",
   CONFLICT: "conflict",
   FORBIDDEN: "forbidden",

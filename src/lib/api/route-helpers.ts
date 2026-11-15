@@ -84,6 +84,30 @@ export function invalidQueryResponse(
   );
 }
 
+export function invalidBodyResponse(): NextResponse {
+  return errorResponse(
+    ERROR_CODES.INVALID_REQUEST,
+    "Invalid JSON request body.",
+    400
+  );
+}
+
+export async function parseJsonBody(
+  request: Request
+): Promise<{ ok: true; body: unknown } | { ok: false }> {
+  try {
+    const text = await request.text();
+
+    if (!text.trim()) {
+      return { ok: false };
+    }
+
+    return { ok: true, body: JSON.parse(text) };
+  } catch {
+    return { ok: false };
+  }
+}
+
 const STATUS_TO_CODE: Record<number, string> = {
   400: ERROR_CODES.VALIDATION_ERROR,
   401: ERROR_CODES.SESSION_EXPIRED,

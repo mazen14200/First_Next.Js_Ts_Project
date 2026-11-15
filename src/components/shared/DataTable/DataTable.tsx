@@ -8,6 +8,8 @@ import {
 } from "@ant-design/icons";
 
 import TablePagination from "@/components/ui/TablePagination/TablePagination";
+import TableSkeleton from "@/components/shared/feedback/TableSkeleton";
+import { displayValue } from "@/utils/display-value";
 
 import type {
   DataTableColumn,
@@ -16,6 +18,18 @@ import type {
 
 const PILL_CLASSES =
   "inline-flex rounded-lg px-2.5 py-1.5 text-sm font-semibold text-slate-700 transition-all duration-200 group-hover:bg-[#1470ad] group-hover:text-white";
+
+const WIDTH_PATTERN = /(\d+(?:\.\d+)?)%/;
+
+function sumExplicitWidths<T>(
+  columns: DataTableColumn<T>[]
+): number {
+  return columns.reduce((total, column) => {
+    const match = column.width?.match(WIDTH_PATTERN);
+
+    return match ? total + Number(match[1]) : total;
+  }, 0);
+}
 
 function DataTable<T>({
   columns,
@@ -35,6 +49,17 @@ function DataTable<T>({
     onEdit || onDelete || rowActions
   );
 
+  if (process.env.NODE_ENV === "development") {
+    const explicitTotal = sumExplicitWidths(columns);
+
+    if (explicitTotal >= 100) {
+      console.warn(
+        `[DataTable] Explicit column widths sum to ${explicitTotal}%. ` +
+          "They must stay below 100% so the last column can take the remainder."
+      );
+    }
+  }
+
   const alignClass = (align?: "start" | "center" | "end") =>
     align === "start"
       ? "text-start"
@@ -48,19 +73,26 @@ function DataTable<T>({
     index: number
   ): ReactNode => {
     if (column.cell) {
-      return column.cell(row, index);
+      const cellResult = column.cell(row, index);
+
+      if (
+        cellResult === null ||
+        cellResult === undefined ||
+        typeof cellResult === "string" ||
+        typeof cellResult === "number" ||
+        typeof cellResult === "boolean"
+      ) {
+        return displayValue(cellResult);
+      }
+
+      return cellResult;
     }
 
     const value = column.accessor
       ? row[column.accessor]
       : undefined;
 
-    const isEmpty =
-      value === null ||
-      value === undefined ||
-      value === "";
-
-    const text = isEmpty ? "—" : String(value);
+    const text = displayValue(value);
 
     const content = column.pill ? (
       <span className={PILL_CLASSES}>{text}</span>
@@ -74,7 +106,7 @@ function DataTable<T>({
           className="inline-flex max-w-full rounded-lg px-2.5 py-1.5 text-sm text-slate-700 transition-all duration-200 group-hover:bg-[#1470ad] group-hover:text-white"
           style={{ maxWidth: column.maxWidth }}
         >
-          <span className="truncate" title={text}>
+          <span className="truncate" title={String(text)}>
             {content}
           </span>
         </span>
@@ -82,6 +114,17 @@ function DataTable<T>({
     }
 
     return content;
+  };
+
+  const renderHeader = (header: ReactNode): ReactNode => {
+    if (
+      typeof header === "string" &&
+      header.trim() === ""
+    ) {
+      return "—";
+    }
+
+    return header;
   };
 
   const renderActions = (row: T): ReactNode[] => {
@@ -139,33 +182,7 @@ function DataTable<T>({
   if (loading) {
     return (
       <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgba(15,23,42,0.04)]">
-        <div className="animate-pulse">
-          <div className="border-b border-slate-100 px-6 py-6">
-            <div className="h-6 w-40 rounded-lg bg-slate-100" />
-            <div className="mt-3 h-4 w-64 rounded-lg bg-slate-100" />
-          </div>
-
-          <div className="space-y-0">
-            {[1, 2, 3].map((item) => (
-              <div
-                key={item}
-                className="flex items-center gap-4 border-b border-slate-100 px-6 py-5 last:border-b-0"
-              >
-                <div className="h-10 w-10 rounded-xl bg-slate-100" />
-
-                <div className="flex-1">
-                  <div className="h-4 w-48 rounded bg-slate-100" />
-                  <div className="mt-2 h-3 w-20 rounded bg-slate-100" />
-                </div>
-
-                <div className="flex gap-2">
-                  <div className="h-9 w-9 rounded-lg bg-slate-100" />
-                  <div className="h-9 w-9 rounded-lg bg-slate-100" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <TableSkeleton columns={columns.length + (hasActions ? 1 : 0)} />
       </section>
     );
   }
@@ -182,24 +199,33 @@ function DataTable<T>({
         <table
           className={`w-full ${minWidth} border-collapse text-center`}
         >
+          <colgroup>
+            {columns.map((column) => (
+              <col
+                key={column.key}
+                style={
+                  column.width
+                    ? { width: column.width }
+                    : undefined
+                }
+              />
+            ))}
+            {hasActions && <col />}
+          </colgroup>
+
           <thead>
             <tr className="bg-[#1470ad]">
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  style={
-                    column.width
-                      ? { width: column.width }
-                      : undefined
-                  }
                   className={`border-b border-e border-white/20 px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-white ${alignClass(column.align)}`}
                 >
-                  {column.header}
+                  {renderHeader(column.header)}
                 </th>
               ))}
 
               {hasActions && (
-                <th className="w-56 border-b border-white/20 px-6 py-4 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
+                <th className="border-b border-white/20 px-6 py-4 text-center text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
                   {labels.actions}
                 </th>
               )}

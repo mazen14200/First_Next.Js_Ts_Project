@@ -1,7 +1,62 @@
 import type {
   ValidationResult,
+  ValidationRule,
   ValidationSchema,
 } from "@/types/validation.types";
+
+function assertValidRule(
+  rule: ValidationRule,
+  field: string
+): void {
+  const fail = (reason: string): never => {
+    throw new Error(
+      `Invalid validation rule "${rule.kind}" on field "${field}": ${reason}`
+    );
+  };
+
+  switch (rule.kind) {
+    case "min":
+    case "max":
+      if (!Number.isFinite(rule.value)) {
+        fail("bound must be a finite number");
+      }
+      break;
+
+    case "step":
+      if (
+        rule.value !== "any" &&
+        (!Number.isFinite(rule.value) || rule.value <= 0)
+      ) {
+        fail("step must be \"any\" or a positive number");
+      }
+      break;
+
+    case "minLength":
+    case "maxLength":
+      if (
+        !Number.isInteger(rule.value) ||
+        rule.value < 0
+      ) {
+        fail("length must be a non-negative integer");
+      }
+      break;
+
+    case "allowedValues":
+      if (!Array.isArray(rule.values)) {
+        fail("values must be an array");
+      }
+      break;
+
+    case "custom":
+      if (typeof rule.validate !== "function") {
+        fail("validate must be a function");
+      }
+      break;
+
+    default:
+      break;
+  }
+}
 
 function isEmpty(value: unknown): boolean {
   if (value === undefined || value === null) {
@@ -65,6 +120,10 @@ export function validate(
   for (const [field, definition] of Object.entries(schema)) {
     const value = data[field];
     const rules = definition.rules;
+
+    for (const rule of rules) {
+      assertValidRule(rule, field);
+    }
 
     const hasRequired = rules.some(
       (rule) => rule.kind === "required"

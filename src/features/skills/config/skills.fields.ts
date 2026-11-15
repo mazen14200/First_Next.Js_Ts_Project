@@ -27,7 +27,6 @@ export function skillFields(
       name: "nameAr",
       label: labels.arabicName,
       placeholder: labels.nameArPlaceholder,
-      required: true,
       dir: "rtl",
     },
     {
@@ -35,7 +34,6 @@ export function skillFields(
       name: "nameEn",
       label: labels.englishName,
       placeholder: labels.nameEnPlaceholder,
-      required: true,
     },
     {
       type: "textarea",

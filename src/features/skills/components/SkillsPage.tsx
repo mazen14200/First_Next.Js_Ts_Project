@@ -137,18 +137,20 @@ const SkillsPage = () => {
       key: "name",
       header: t("skill"),
       pill: true,
+      width: "30%",
       cell: (skill) => getSkillName(skill),
     },
     {
       key: "description",
       header: t("descriptionLabel"),
       accessor: "description",
+      width: "40%",
       maxWidth: 420,
     },
     {
       key: "status",
       header: t("status"),
-      width: "10rem",
+      width: "15%",
       cell: (skill) => {
         const isUpdating = updatingStatusId === skill.id;
 
@@ -219,6 +221,7 @@ const SkillsPage = () => {
           rowKey={(skill) => skill.id}
           loading={crud.status.loading}
           refreshing={crud.status.refreshing}
+          minWidth="min-w-[900px]"
           onEdit={crud.form.openEdit}
           onDelete={crud.remove.request}
           getRowLabel={getSkillName}

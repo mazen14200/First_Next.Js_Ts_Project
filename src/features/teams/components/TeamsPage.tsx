@@ -56,6 +56,7 @@ const TeamsPage = () => {
       key: "name",
       header: t("name"),
       pill: true,
+      width: "55%",
       cell: (team) => getTeamName(team),
     },
     {
@@ -63,6 +64,7 @@ const TeamsPage = () => {
       header: t("rate"),
       accessor: "rate",
       pill: true,
+      width: "25%",
     },
   ];
 

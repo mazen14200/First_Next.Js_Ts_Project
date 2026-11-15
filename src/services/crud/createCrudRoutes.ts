@@ -7,10 +7,12 @@ import { authErrorResponse } from "@/lib/api/auth-error-response";
 import { validationErrorResponse } from "@/lib/api/error-response";
 import {
   InvalidQueryError,
+  invalidBodyResponse,
   invalidIdResponse,
   invalidPaginationResponse,
   invalidQueryResponse,
   parseId,
+  parseJsonBody,
   parsePagination,
   toErrorResponse,
 } from "@/lib/api/route-helpers";
@@ -138,7 +140,13 @@ export function createCrudRoutes<
 
     async POST(request: NextRequest) {
       try {
-        const body: unknown = await request.json();
+        const parsed = await parseJsonBody(request);
+
+        if (!parsed.ok) {
+          return invalidBodyResponse();
+        }
+
+        const body: unknown = parsed.body;
 
         const validationResponse = validateBody(
           body,
@@ -213,7 +221,13 @@ export function createCrudRoutes<
           return invalidIdResponse(entityName);
         }
 
-        const body: unknown = await request.json();
+        const parsed = await parseJsonBody(request);
+
+        if (!parsed.ok) {
+          return invalidBodyResponse();
+        }
+
+        const body: unknown = parsed.body;
 
         const validationResponse = validateBody(
           body,
