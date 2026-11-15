@@ -43,7 +43,7 @@ export interface CrudClient<
   ) => Promise<PagedResult<TEntity>>;
   getById: (id: TId) => Promise<TEntity>;
   create: (dto: TCreate) => Promise<TEntity>;
-  update: (id: TId, dto: TUpdate) => Promise<TEntity>;
+  update: (id: TId, dto: TUpdate) => Promise<TEntity | undefined>;
   remove: (id: TId) => Promise<void>;
 }
 
@@ -145,7 +145,7 @@ export function createCrudClient<
       }),
 
     update: (id, dto) =>
-      request<TEntity>(
+      request<TEntity | undefined>(
         `/${encodeURIComponent(String(id))}`,
         {
           method: "PUT",

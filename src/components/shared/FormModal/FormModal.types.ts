@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import type { ValidationSchema } from "@/types/validation.types";
+
 export type FormValues = Record<string, string>;
 
 interface BaseField {
@@ -69,6 +71,7 @@ export interface FormModalProps<TEntity, TPayload> {
   open: boolean;
   entity?: TEntity | null;
   fields: FormField[];
+  schema?: ValidationSchema;
   toFormValues: (entity?: TEntity | null) => FormValues;
   toPayload: (values: FormValues) => TPayload;
   onSubmit: (payload: TPayload) => Promise<void>;

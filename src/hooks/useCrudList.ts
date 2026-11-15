@@ -57,6 +57,8 @@ export function useCrudList<
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<unknown>(null);
+  const [errorAction, setErrorAction] =
+    useState<CrudErrorAction | null>(null);
 
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -68,6 +70,7 @@ export function useCrudList<
 
   const [formOpen, setFormOpen] = useState(false);
   const [formEntity, setFormEntity] = useState<TEntity | null>(null);
+  const [formSessionId, setFormSessionId] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
 
   const [removeTarget, setRemoveTarget] = useState<TEntity | null>(
@@ -120,6 +123,7 @@ export function useCrudList<
         }
 
         setError(err);
+        setErrorAction("load");
         onErrorRef.current(err, "load");
       } finally {
         if (requestId === requestSeqRef.current) {
@@ -134,6 +138,11 @@ export function useCrudList<
 
   const reload = () => {
     setReloadToken((token) => token + 1);
+  };
+
+  const clearError = () => {
+    setError(null);
+    setErrorAction(null);
   };
 
   const setDraftFilters = (patch: Partial<TFilters>) => {
@@ -158,11 +167,13 @@ export function useCrudList<
 
   const openCreate = () => {
     setFormEntity(null);
+    setFormSessionId((id) => id + 1);
     setFormOpen(true);
   };
 
   const openEdit = (entity: TEntity) => {
     setFormEntity(entity);
+    setFormSessionId((id) => id + 1);
     setFormOpen(true);
   };
 
@@ -189,7 +200,13 @@ export function useCrudList<
       closeForm();
       reload();
     } catch (err) {
-      onErrorRef.current(err, formEntity ? "update" : "create");
+      const action: CrudErrorAction = formEntity
+        ? "update"
+        : "create";
+
+      setError(err);
+      setErrorAction(action);
+      onErrorRef.current(err, action);
       throw err;
     } finally {
       setIsSaving(false);
@@ -226,6 +243,8 @@ export function useCrudList<
         reload();
       }
     } catch (err) {
+      setError(err);
+      setErrorAction("delete");
       onErrorRef.current(err, "delete");
       throw err;
     } finally {
@@ -243,6 +262,7 @@ export function useCrudList<
       loading,
       refreshing,
       error,
+      errorAction,
     },
     query: {
       page,
@@ -261,10 +281,12 @@ export function useCrudList<
       apply,
       reset,
       reload,
+      clearError,
     },
     form: {
       open: formOpen,
       entity: formEntity,
+      sessionId: formSessionId,
       isSaving,
       openCreate,
       openEdit,

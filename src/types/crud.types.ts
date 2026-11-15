@@ -13,7 +13,9 @@ export interface ListParams {
 }
 
 export interface ApiErrorBody {
+  code?: string;
   message?: string;
   detail?: string;
+  fieldErrors?: Record<string, string[]>;
   errors?: Record<string, string[]>;
 }

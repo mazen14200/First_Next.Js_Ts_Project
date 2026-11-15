@@ -12,7 +12,9 @@ import {
 import type { DataTableColumn } from "@/components/shared";
 import TableHeader from "@/components/ui/TableHeader/TableHeader";
 import FilterSelect from "@/components/ui/FilterSelect/FilterSelect";
+import ApiErrorAlert from "@/components/feedback/ApiErrorAlert";
 import { pickLocalized } from "@/utils/localized";
+import { apiErrorMessageKey } from "@/lib/api/error-message";
 
 import type {
   CreateSkillRequest,
@@ -22,6 +24,7 @@ import type {
 } from "@/features/skills/types/skills.types";
 
 import { skillsClient } from "@/features/skills/services/skills.client";
+import { skillSchema } from "@/features/skills/validation/skill.schema";
 import {
   skillFields,
   toSkillFormValues,
@@ -31,6 +34,7 @@ import {
 const SkillsPage = () => {
   const locale = useLocale();
   const t = useTranslations("skills");
+  const tCommon = useTranslations("common");
 
   const crud = useCrudList<
     Skill,
@@ -45,12 +49,28 @@ const SkillsPage = () => {
   const [toggleTarget, setToggleTarget] = useState<Skill | null>(
     null
   );
+  const [toggleError, setToggleError] = useState<string | null>(
+    null
+  );
   const [updatingStatusId, setUpdatingStatusId] = useState<
     number | null
   >(null);
 
   const getSkillName = (skill: Skill) =>
     pickLocalized(locale, skill.nameAr, skill.nameEn);
+
+  const deleteError =
+    crud.status.errorAction === "delete" &&
+    crud.status.error
+      ? tCommon(
+          `errors.${apiErrorMessageKey(crud.status.error)}` as never
+        )
+      : null;
+
+  const loadError =
+    crud.status.errorAction === "load"
+      ? crud.status.error
+      : null;
 
   const draftIsActive =
     crud.query.draftFilters.isActive;
@@ -72,6 +92,20 @@ const SkillsPage = () => {
     crud.actions.setDraftFilters({ isActive: selected });
   };
 
+  const openToggle = (skill: Skill) => {
+    setToggleError(null);
+    setToggleTarget(skill);
+  };
+
+  const closeToggle = () => {
+    if (updatingStatusId !== null) {
+      return;
+    }
+
+    setToggleError(null);
+    setToggleTarget(null);
+  };
+
   const handleToggleConfirm = async () => {
     if (!toggleTarget) {
       return;
@@ -81,13 +115,18 @@ const SkillsPage = () => {
     const nextActive = !skill.isActive;
 
     setUpdatingStatusId(skill.id);
+    setToggleError(null);
 
     try {
       await skillsClient.setActive(skill.id, nextActive);
       setToggleTarget(null);
       crud.actions.reload();
     } catch (error) {
-      console.error("Failed to update skill status:", error);
+      setToggleError(
+        tCommon(
+          `errors.${apiErrorMessageKey(error)}` as never
+        )
+      );
     } finally {
       setUpdatingStatusId(null);
     }
@@ -116,7 +155,7 @@ const SkillsPage = () => {
         return (
           <button
             type="button"
-            onClick={() => setToggleTarget(skill)}
+            onClick={() => openToggle(skill)}
             disabled={isUpdating}
             className={`relative inline-flex h-7 w-12 cursor-pointer items-center rounded-full p-1 transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60 ${
               skill.isActive
@@ -166,6 +205,14 @@ const SkillsPage = () => {
           onAdd={crud.form.openCreate}
         />
 
+        {loadError ? (
+          <ApiErrorAlert
+            error={loadError}
+            onRetry={crud.actions.reload}
+            onClose={crud.actions.clearError}
+          />
+        ) : null}
+
         <DataTable
           columns={columns}
           rows={crud.data.items}
@@ -193,9 +240,10 @@ const SkillsPage = () => {
       </div>
 
       <FormModal<Skill, CreateSkillRequest | UpdateSkillRequest>
-        key={crud.form.entity?.id ?? "new"}
+        key={crud.form.sessionId}
         open={crud.form.open}
         entity={crud.form.entity}
+        schema={skillSchema}
         fields={skillFields({
           arabicName: t("arabicName"),
           nameArPlaceholder: t("nameArPlaceholder"),
@@ -232,14 +280,19 @@ const SkillsPage = () => {
         cancelLabel={t("cancel")}
         variant="danger"
         loading={crud.remove.isDeleting}
+        error={deleteError}
         onConfirm={async () => {
           try {
             await crud.remove.confirm();
+            crud.actions.clearError();
           } catch {
-            // Error already reported via onError
+            // Error already reported via status.error
           }
         }}
-        onClose={crud.remove.cancel}
+        onClose={() => {
+          crud.actions.clearError();
+          crud.remove.cancel();
+        }}
       />
 
       <ConfirmModal
@@ -265,12 +318,9 @@ const SkillsPage = () => {
         cancelLabel={t("cancel")}
         variant={toggleTarget?.isActive ? "danger" : "primary"}
         loading={updatingStatusId !== null}
+        error={toggleError}
         onConfirm={handleToggleConfirm}
-        onClose={() => {
-          if (updatingStatusId === null) {
-            setToggleTarget(null);
-          }
-        }}
+        onClose={closeToggle}
       />
     </>
   );

@@ -2,23 +2,40 @@
 
 import { useId, useState } from "react";
 import type { ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { CloseOutlined } from "@ant-design/icons";
 
 import { ApiError } from "@/lib/api/api-error";
+import { apiErrorMessageKey } from "@/lib/api/error-message";
+import { validate } from "@/lib/validation/validate";
+import { validationMessageKey } from "@/lib/validation/validation-messages";
 
 import type {
   FormField,
   FormModalProps,
   FormValues,
 } from "@/components/shared/FormModal/FormModal.types";
+import type { ValidationSchema } from "@/types/validation.types";
 
 const INPUT_CLASSES =
   "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-[#1470ad] focus:ring-4 focus:ring-[#1470ad]/10 disabled:cursor-not-allowed disabled:bg-slate-50";
+
+function schemaRequires(
+  schema: ValidationSchema | undefined,
+  fieldName: string
+): boolean {
+  return Boolean(
+    schema?.[fieldName]?.rules.some(
+      (rule) => rule.kind === "required"
+    )
+  );
+}
 
 function FormModal<TEntity, TPayload>({
   open,
   entity,
   fields,
+  schema,
   toFormValues,
   toPayload,
   onSubmit,
@@ -26,6 +43,7 @@ function FormModal<TEntity, TPayload>({
   labels,
 }: FormModalProps<TEntity, TPayload>) {
   const idPrefix = useId();
+  const tCommon = useTranslations("common");
 
   const [values, setValues] = useState<FormValues>(() =>
     toFormValues(entity ?? null)
@@ -57,19 +75,35 @@ function FormModal<TEntity, TPayload>({
     });
   };
 
-  const hasMissingRequired = fields.some(
-    (field) =>
-      field.required && !(values[field.name] ?? "").trim()
-  );
+  const translateCode = (code: string): string =>
+    tCommon(
+      `errors.${validationMessageKey(code)}` as never
+    );
 
   const validateAll = (): boolean => {
     const errors: Record<string, string> = {};
 
-    for (const field of fields) {
-      const value = values[field.name] ?? "";
-      const customError = field.validate?.(value, values);
+    if (schema) {
+      const result = validate(values, schema);
 
-      if (customError && !errors[field.name]) {
+      for (const [field, codes] of Object.entries(
+        result.fieldErrors
+      )) {
+        errors[field] = translateCode(codes[0]);
+      }
+    }
+
+    for (const field of fields) {
+      if (errors[field.name]) {
+        continue;
+      }
+
+      const customError = field.validate?.(
+        values[field.name] ?? "",
+        values
+      );
+
+      if (customError) {
         errors[field.name] = customError;
       }
     }
@@ -79,8 +113,27 @@ function FormModal<TEntity, TPayload>({
     return Object.keys(errors).length === 0;
   };
 
+  const applyServerFieldErrors = (
+    serverFieldErrors: Record<string, string[]>
+  ) => {
+    const errors: Record<string, string> = {};
+
+    for (const [field, codes] of Object.entries(
+      serverFieldErrors
+    )) {
+      if (codes.length > 0) {
+        errors[field] = translateCode(codes[0]);
+      }
+    }
+
+    setFieldErrors((current) => ({
+      ...current,
+      ...errors,
+    }));
+  };
+
   const handleSubmit = async () => {
-    if (hasMissingRequired || isSaving) {
+    if (isSaving) {
       return;
     }
 
@@ -94,12 +147,23 @@ function FormModal<TEntity, TPayload>({
     try {
       await onSubmit(toPayload(values));
     } catch (error) {
-      if (error instanceof ApiError) {
-        setSubmitError(error.message);
-      } else if (error instanceof Error) {
-        setSubmitError(error.message);
+      if (
+        error instanceof ApiError &&
+        error.fieldErrors &&
+        Object.keys(error.fieldErrors).length > 0
+      ) {
+        applyServerFieldErrors(error.fieldErrors);
+        setSubmitError(
+          tCommon(
+            `errors.${apiErrorMessageKey(error)}` as never
+          )
+        );
       } else {
-        setSubmitError("Failed to save.");
+        setSubmitError(
+          tCommon(
+            `errors.${apiErrorMessageKey(error)}` as never
+          )
+        );
       }
     } finally {
       setIsSaving(false);
@@ -110,6 +174,8 @@ function FormModal<TEntity, TPayload>({
     const fieldId = `${idPrefix}-${field.name}`;
     const value = values[field.name] ?? "";
     const error = fieldErrors[field.name];
+    const isRequired =
+      field.required || schemaRequires(schema, field.name);
 
     const errorText = error ? (
       <p className="mt-1.5 text-xs font-medium text-red-500">
@@ -218,7 +284,7 @@ function FormModal<TEntity, TPayload>({
           className="mb-2 block text-sm font-medium text-slate-700"
         >
           {field.label}
-          {field.required && (
+          {isRequired && (
             <span className="ms-1 text-red-500">*</span>
           )}
         </label>
@@ -282,7 +348,7 @@ function FormModal<TEntity, TPayload>({
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={isSaving || hasMissingRequired}
+            disabled={isSaving}
             className="cursor-pointer rounded-xl bg-[#1470ad] px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#12639a] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSaving

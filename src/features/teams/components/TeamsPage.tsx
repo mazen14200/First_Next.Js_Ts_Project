@@ -9,8 +9,10 @@ import {
   FormModal,
 } from "@/components/shared";
 import type { DataTableColumn } from "@/components/shared";
+import ApiErrorAlert from "@/components/feedback/ApiErrorAlert";
 import TableHeader from "@/components/ui/TableHeader/TableHeader";
 import { pickLocalized } from "@/utils/localized";
+import { apiErrorMessageKey } from "@/lib/api/error-message";
 
 import type {
   CreateTeamRequest,
@@ -19,6 +21,7 @@ import type {
 } from "@/features/teams/types/team.types";
 
 import { teamsClient } from "@/features/teams/services/teams.client";
+import { teamSchema } from "@/features/teams/validation/team.schema";
 import {
   teamFields,
   toTeamFormValues,
@@ -28,11 +31,25 @@ import {
 const TeamsPage = () => {
   const locale = useLocale();
   const t = useTranslations("teams");
+  const tCommon = useTranslations("common");
 
   const crud = useCrudList({ client: teamsClient });
 
   const getTeamName = (team: Team) =>
     pickLocalized(locale, team.nameAR, team.nameEN);
+
+  const deleteError =
+    crud.status.errorAction === "delete" &&
+    crud.status.error
+      ? tCommon(
+          `errors.${apiErrorMessageKey(crud.status.error)}` as never
+        )
+      : null;
+
+  const loadError =
+    crud.status.errorAction === "load"
+      ? crud.status.error
+      : null;
 
   const columns: DataTableColumn<Team>[] = [
     {
@@ -65,6 +82,14 @@ const TeamsPage = () => {
           onAdd={crud.form.openCreate}
         />
 
+        {loadError ? (
+          <ApiErrorAlert
+            error={loadError}
+            onRetry={crud.actions.reload}
+            onClose={crud.actions.clearError}
+          />
+        ) : null}
+
         <DataTable
           columns={columns}
           rows={crud.data.items}
@@ -92,9 +117,10 @@ const TeamsPage = () => {
       </div>
 
       <FormModal<Team, CreateTeamRequest | UpdateTeamRequest>
-        key={crud.form.entity?.id ?? "new"}
+        key={crud.form.sessionId}
         open={crud.form.open}
         entity={crud.form.entity}
+        schema={teamSchema}
         fields={teamFields({
           nameAR: t("nameAR"),
           nameARPlaceholder: t("nameARPlaceholder"),
@@ -131,14 +157,19 @@ const TeamsPage = () => {
         cancelLabel={t("cancel")}
         variant="danger"
         loading={crud.remove.isDeleting}
+        error={deleteError}
         onConfirm={async () => {
           try {
             await crud.remove.confirm();
+            crud.actions.clearError();
           } catch {
-            // Error already reported via onError
+            // Error already reported via status.error
           }
         }}
-        onClose={crud.remove.cancel}
+        onClose={() => {
+          crud.actions.clearError();
+          crud.remove.cancel();
+        }}
       />
     </>
   );

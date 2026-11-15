@@ -418,5 +418,31 @@
   },
   "login": {
     "sessionExpired": "Your session has expired. Please sign in again."
+  },
+  "common": {
+    "errors": {
+      "validationFailed": "Please review the entered data.",
+      "required": "This field is required.",
+      "invalidNumber": "Enter a valid number.",
+      "minValue": "The value is below the allowed minimum.",
+      "maxValue": "The value is above the allowed maximum.",
+      "stepMismatch": "The value does not match the allowed step.",
+      "minLength": "The text is shorter than the minimum length.",
+      "maxLength": "The text is longer than the maximum length.",
+      "notAllowed": "This value is not allowed.",
+      "invalidRequest": "Invalid request.",
+      "notFound": "The requested item was not found.",
+      "conflict": "The operation could not be completed due to conflicts or related records.",
+      "forbidden": "You do not have permission to perform this action.",
+      "network": "Could not reach the server. Check your connection and try again.",
+      "unavailable": "The service is temporarily unavailable. Please try again later.",
+      "sessionExpired": "Your session has expired. Please sign in again.",
+      "server": "An unexpected error occurred. Please try again.",
+      "unknown": "An unexpected error occurred.",
+      "retry": "Retry",
+      "dismiss": "Dismiss",
+      "arabicOnly": "Use Arabic letters, numbers, and symbols only.",
+      "latinOnly": "Use English letters, numbers, and symbols only."
+    }
   }
 }

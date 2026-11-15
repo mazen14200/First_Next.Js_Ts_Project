@@ -17,6 +17,7 @@ interface ConfirmModalProps {
   variant?: "danger" | "primary";
   icon?: ReactNode;
   loading?: boolean;
+  error?: string | null;
   onConfirm: () => void | Promise<void>;
   onClose: () => void;
 }
@@ -31,6 +32,7 @@ const ConfirmModal = ({
   variant = "danger",
   icon,
   loading = false,
+  error = null,
   onConfirm,
   onClose,
 }: ConfirmModalProps) => {
@@ -100,6 +102,14 @@ const ConfirmModal = ({
                 {itemLabel}
               </p>
             </div>
+          </div>
+        )}
+
+        {error && (
+          <div className="px-6 pb-2">
+            <p className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-medium text-red-600">
+              {error}
+            </p>
           </div>
         )}
 

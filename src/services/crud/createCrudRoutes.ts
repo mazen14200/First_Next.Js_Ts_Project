@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import type { ListParams } from "@/types/crud.types";
+import type { ValidationResult } from "@/types/validation.types";
 
 import { authErrorResponse } from "@/lib/api/auth-error-response";
+import { validationErrorResponse } from "@/lib/api/error-response";
 import {
+  InvalidQueryError,
   invalidIdResponse,
   invalidPaginationResponse,
+  invalidQueryResponse,
   parseId,
   parsePagination,
   toErrorResponse,
@@ -29,6 +33,10 @@ export interface CrudRoutesOptions<
   parseFilters?: (
     searchParams: URLSearchParams
   ) => TFilters;
+  validateCreate?: (body: unknown) => ValidationResult;
+  validateUpdate?: (body: unknown) => ValidationResult;
+  parseIdParam?: (id: string) => TId | null;
+  maxPageSize?: number;
   createStatus?: number;
 }
 
@@ -42,22 +50,66 @@ export function createCrudRoutes<
   service,
   entityName,
   parseFilters,
+  validateCreate,
+  validateUpdate,
+  parseIdParam,
+  maxPageSize,
   createStatus = 201,
 }: CrudRoutesOptions<TEntity, TCreate, TUpdate, TFilters, TId>) {
+  const resolveId = (id: string): TId | null => {
+    if (parseIdParam) {
+      return parseIdParam(id);
+    }
+
+    const parsed = parseId(id);
+
+    return parsed === null ? null : (parsed as TId);
+  };
+
+  const validateBody = (
+    body: unknown,
+    validator?: (body: unknown) => ValidationResult
+  ): NextResponse | null => {
+    if (!validator) {
+      return null;
+    }
+
+    const result = validator(body);
+
+    if (result.valid) {
+      return null;
+    }
+
+    return validationErrorResponse(result.fieldErrors);
+  };
+
   const collection = {
     async GET(request: NextRequest) {
       try {
         const { searchParams } = new URL(request.url);
 
-        const pagination = parsePagination(searchParams);
+        const pagination = parsePagination(
+          searchParams,
+          maxPageSize
+        );
 
         if (!pagination) {
           return invalidPaginationResponse();
         }
 
-        const filters = parseFilters
-          ? parseFilters(searchParams)
-          : ({} as TFilters);
+        let filters: TFilters;
+
+        try {
+          filters = parseFilters
+            ? parseFilters(searchParams)
+            : ({} as TFilters);
+        } catch (filterError) {
+          if (filterError instanceof InvalidQueryError) {
+            return invalidQueryResponse(filterError.param);
+          }
+
+          throw filterError;
+        }
 
         const search =
           searchParams.get("Search")?.trim() ?? "";
@@ -70,8 +122,8 @@ export function createCrudRoutes<
 
         return NextResponse.json(result);
       } catch (error) {
-         const authResponse = authErrorResponse(error);
-         if (authResponse) return authResponse;
+        const authResponse = authErrorResponse(error);
+        if (authResponse) return authResponse;
         console.error(
           `GET /api/${entityName} failed:`,
           error
@@ -86,16 +138,25 @@ export function createCrudRoutes<
 
     async POST(request: NextRequest) {
       try {
-        const body = (await request.json()) as TCreate;
+        const body: unknown = await request.json();
 
-        const entity = await service.create(body);
+        const validationResponse = validateBody(
+          body,
+          validateCreate
+        );
+
+        if (validationResponse) {
+          return validationResponse;
+        }
+
+        const entity = await service.create(body as TCreate);
 
         return NextResponse.json(entity, {
           status: createStatus,
         });
       } catch (error) {
-         const authResponse = authErrorResponse(error);
-         if (authResponse) return authResponse;
+        const authResponse = authErrorResponse(error);
+        if (authResponse) return authResponse;
         console.error(
           `POST /api/${entityName} failed:`,
           error
@@ -116,20 +177,18 @@ export function createCrudRoutes<
     ) {
       try {
         const { id } = await context.params;
-        const entityId = parseId(id);
+        const entityId = resolveId(id);
 
         if (entityId === null) {
           return invalidIdResponse(entityName);
         }
 
-        const entity = await service.getById(
-          entityId as TId
-        );
+        const entity = await service.getById(entityId);
 
         return NextResponse.json(entity);
       } catch (error) {
-         const authResponse = authErrorResponse(error);
-         if (authResponse) return authResponse;
+        const authResponse = authErrorResponse(error);
+        if (authResponse) return authResponse;
         console.error(
           `GET /api/${entityName}/[id] failed:`,
           error
@@ -148,29 +207,36 @@ export function createCrudRoutes<
     ) {
       try {
         const { id } = await context.params;
-        const entityId = parseId(id);
+        const entityId = resolveId(id);
 
         if (entityId === null) {
           return invalidIdResponse(entityName);
         }
 
-        const body = (await request.json()) as TUpdate;
+        const body: unknown = await request.json();
+
+        const validationResponse = validateBody(
+          body,
+          validateUpdate
+        );
+
+        if (validationResponse) {
+          return validationResponse;
+        }
 
         const entity = await service.update(
-          entityId as TId,
-          body
+          entityId,
+          body as TUpdate
         );
 
         if (entity !== undefined) {
           return NextResponse.json(entity);
         }
 
-        return NextResponse.json({
-          message: `${entityName} updated successfully.`,
-        });
+        return new NextResponse(null, { status: 204 });
       } catch (error) {
-         const authResponse = authErrorResponse(error);
-         if (authResponse) return authResponse;
+        const authResponse = authErrorResponse(error);
+        if (authResponse) return authResponse;
         console.error(
           `PUT /api/${entityName}/[id] failed:`,
           error
@@ -189,20 +255,18 @@ export function createCrudRoutes<
     ) {
       try {
         const { id } = await context.params;
-        const entityId = parseId(id);
+        const entityId = resolveId(id);
 
         if (entityId === null) {
           return invalidIdResponse(entityName);
         }
 
-        await service.remove(entityId as TId);
+        await service.remove(entityId);
 
-        return NextResponse.json({
-          message: `${entityName} deleted successfully.`,
-        });
+        return new NextResponse(null, { status: 204 });
       } catch (error) {
-         const authResponse = authErrorResponse(error);
-         if (authResponse) return authResponse;
+        const authResponse = authErrorResponse(error);
+        if (authResponse) return authResponse;
         console.error(
           `DELETE /api/${entityName}/[id] failed:`,
           error
